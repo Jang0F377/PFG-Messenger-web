@@ -1,7 +1,7 @@
 const Hero = () => {
   return (
     <div className="-mb-32 mt-[-4.5rem] overflow-hidden pb-32 pt-[4.5rem] lg:mt-[-4.75rem] lg:pt-[4.75rem]">
-      <div className="flex flex-col  justify-between bg-neon-blue-800 py-16 sm:px-2 md:flex-row lg:relative lg:justify-center lg:py-20 lg:px-0">
+      <div className="flex flex-col  justify-between bg-neon-blue-700 py-16 sm:px-2 md:flex-row lg:relative lg:justify-center lg:py-20 lg:px-0">
         <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-y-16 gap-x-8 px-4 lg:max-w-6xl lg:grid-cols-2 xl:gap-x-16 ">
           <div className="relative z-10 text-center md:text-left">
             <div className="relative">

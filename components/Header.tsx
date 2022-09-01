@@ -26,7 +26,7 @@ function MobileNavIcon({ open }: any) {
   return (
     <svg
       aria-hidden="true"
-      className="h-3.5 w-3.5 overflow-visible stroke-neon-blue-50"
+      className="h-3.5 w-3.5 overflow-visible stroke-neon-blue-700 "
       fill="none"
       strokeWidth={2}
       strokeLinecap="round"
@@ -59,7 +59,7 @@ function MobileNavigation({ redirect, authenticated, logout }: MobileNavProps) {
   return (
     <Popover>
       <Popover.Button
-        className="relative z-10 flex h-8 w-8 items-center justify-center  [&:not(:focus-visible)]:focus:outline-none"
+        className="relative z-10 flex h-8 w-8 items-center justify-center rounded-lg hover:ring-1 hover:ring-neon-blue-700   "
         aria-label="Toggle Navigation"
       >
         {({ open }) => <MobileNavIcon open={open} />}
@@ -125,7 +125,7 @@ function Header() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
 
   return (
-    <header className="bg-neon-blue-tone-200 py-4">
+    <header className="bg-neon-blue-50 py-4">
       <Container className="">
         <nav className="relative z-50 flex justify-between  ">
           <div className=" flex items-center  xs:mx-auto lg:mx-0  lg:gap-x-12">
@@ -146,7 +146,7 @@ function Header() {
                 <button
                   onClick={() => logout()}
                   type="button"
-                  className="inline-block rounded-md border border-transparent bg-neon-blue-800 py-2 px-4 text-base font-medium text-white hover:border-white hover:bg-transparent hover:text-neon-blue-900"
+                  className="inline-block rounded-md border border-transparent bg-neon-blue-700 py-2 px-4 text-base font-medium text-neon-blue-50 hover:border-white hover:bg-neon-blue-800 hover:text-neon-blue-200"
                 >
                   Logout
                 </button>
@@ -154,7 +154,7 @@ function Header() {
                 <button
                   onClick={() => loginWithRedirect()}
                   type="button"
-                  className="inline-block rounded-md border border-transparent bg-neon-blue-800 py-2 px-4 text-base font-medium text-white hover:border-white hover:bg-transparent hover:text-neon-blue-900"
+                  className="inline-block rounded-md border border-transparent bg-neon-blue-700 py-2 px-4 text-base font-medium text-white hover:border-white hover:bg-neon-blue-800 hover:text-neon-blue-50"
                 >
                   Login / Register
                 </button>

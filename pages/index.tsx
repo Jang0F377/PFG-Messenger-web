@@ -8,7 +8,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>PFG-Messenger</title>
+        <title>PFG702-Sesh!</title>
       </Head>
       <Header />
       <main>
