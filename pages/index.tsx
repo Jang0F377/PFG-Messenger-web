@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>PFG702-Sesh!</title>
+        <title>PreFireGaming-Sesh!</title>
       </Head>
       <Header />
       <main>

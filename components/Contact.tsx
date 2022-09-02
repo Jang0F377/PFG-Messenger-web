@@ -2,11 +2,11 @@ import { TypeAnimation } from "react-type-animation";
 
 function Contact() {
   return (
-    <div id={"contact"} className="relative bg-neon-blue-50">
+    <div id={"contact"} className="relative overflow-hidden  bg-neon-blue-50">
       <div className=" lg:absolute lg:inset-0">
         <div className=" lg:absolute lg:bottom-2/3 lg:right-0 lg:w-1/3">
           <img
-            className="w-full px-1.5 lg:absolute  lg:rotate-45  lg:px-0"
+            className="mx-auto w-[85vw] px-1.5 lg:absolute lg:w-full lg:rotate-90 lg:scale-150 2xl:rotate-45 2xl:scale-110  2xl:px-0"
             src="/MicrosoftTeams-image-removebg-preview.png"
             alt="ERR"
           />

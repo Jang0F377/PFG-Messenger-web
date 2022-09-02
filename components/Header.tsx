@@ -119,7 +119,7 @@ function Header() {
   }, [isAuthenticated]);
 
   return (
-    <header className="bg-neon-blue-50 py-4">
+    <header className=" bg-neon-blue-50 py-4">
       <Container className="">
         <nav className="relative z-50 flex justify-between  ">
           <div className=" flex items-center  xs:mx-auto lg:mx-0  lg:gap-x-12">

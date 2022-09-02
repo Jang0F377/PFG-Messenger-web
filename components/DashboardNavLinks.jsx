@@ -8,7 +8,7 @@ function DashboardNavLinks() {
   return (
     <>
       {[
-        ["Dashboard", "#dashboard"],
+        ["Dashboard", "#"],
         ["Friends", "#friends"],
         ["Support", "#support"],
         ["Account", "#account"],
