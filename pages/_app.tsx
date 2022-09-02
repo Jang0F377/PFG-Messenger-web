@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Auth0Provider
       domain={"dev-860q4exx.us.auth0.com"}
       clientId={"3Uolp2goHaBXgM9qZj2FqnjVllOJVJgI"}
-      redirectUri={"http://localhost:3000"}
+      redirectUri={"http://localhost:3000/dashboard"}
     >
       <Component {...pageProps} />
     </Auth0Provider>

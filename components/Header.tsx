@@ -1,7 +1,7 @@
 import { Popover, Transition } from "@headlessui/react";
 import Link from "next/link";
 import clsx from "clsx";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import Container from "./Container";
 import NavLinks from "./NavLinks";
 import {
@@ -9,6 +9,7 @@ import {
   RedirectLoginOptions,
   useAuth0,
 } from "@auth0/auth0-react";
+import { useRouter } from "next/router";
 
 function MobileNavLink({ href, children }: any) {
   return (
@@ -51,11 +52,9 @@ function MobileNavIcon({ open }: any) {
 
 interface MobileNavProps {
   redirect: (options?: RedirectLoginOptions | undefined) => Promise<void>;
-  authenticated: boolean;
-  logout: (options?: LogoutOptions | undefined) => void;
 }
 
-function MobileNavigation({ redirect, authenticated, logout }: MobileNavProps) {
+function MobileNavigation({ redirect }: MobileNavProps) {
   return (
     <Popover>
       <Popover.Button
@@ -95,23 +94,13 @@ function MobileNavigation({ redirect, authenticated, logout }: MobileNavProps) {
             <MobileNavLink href="#contact">Contact</MobileNavLink>
             <div className="m-1 flex flex-row justify-center py-1">
               <div className="-mr-1 flex lg:hidden">
-                {authenticated ? (
-                  <button
-                    onClick={() => logout()}
-                    type="button"
-                    className="inline-block rounded-md border border-transparent bg-neon-blue-700 py-1 px-2 text-base font-medium text-white hover:border-white hover:bg-neon-blue-900 hover:text-neon-blue-50"
-                  >
-                    Logout
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => redirect()}
-                    type="button"
-                    className="inline-block rounded-md border border-transparent bg-neon-blue-700 py-1 px-2 text-base font-medium text-white hover:border-white hover:bg-neon-blue-900 hover:text-neon-blue-50"
-                  >
-                    Login / Register
-                  </button>
-                )}
+                <button
+                  onClick={() => redirect()}
+                  type="button"
+                  className="inline-block rounded-md border border-transparent bg-neon-blue-700 py-1 px-2 text-base font-medium text-white hover:border-white hover:bg-neon-blue-900 hover:text-neon-blue-50"
+                >
+                  Login / Register
+                </button>
               </div>
             </div>
           </Popover.Panel>
@@ -123,6 +112,11 @@ function MobileNavigation({ redirect, authenticated, logout }: MobileNavProps) {
 
 function Header() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  const router = useRouter();
+  useEffect(() => {
+    if (isAuthenticated)
+      router.replace("/dashboard").catch((err) => alert(err));
+  }, [isAuthenticated]);
 
   return (
     <header className="bg-neon-blue-50 py-4">
@@ -142,30 +136,16 @@ function Header() {
           </div>
           <div className="flex items-center gap-x-2 lg:gap-x-8">
             <div className="hidden items-center lg:flex lg:space-x-6 ">
-              {isAuthenticated ? (
-                <button
-                  onClick={() => logout()}
-                  type="button"
-                  className="inline-block rounded-md border border-transparent bg-neon-blue-700 py-2 px-4 text-base font-medium text-neon-blue-50 hover:border-white hover:bg-neon-blue-800 hover:text-neon-blue-200"
-                >
-                  Logout
-                </button>
-              ) : (
-                <button
-                  onClick={() => loginWithRedirect()}
-                  type="button"
-                  className="inline-block rounded-md border border-transparent bg-neon-blue-700 py-2 px-4 text-base font-medium text-white hover:border-white hover:bg-neon-blue-800 hover:text-neon-blue-50"
-                >
-                  Login / Register
-                </button>
-              )}
+              <button
+                onClick={() => loginWithRedirect()}
+                type="button"
+                className="inline-block rounded-md border border-transparent bg-neon-blue-700 py-2 px-4 text-base font-medium text-white hover:border-white hover:bg-neon-blue-800 hover:text-neon-blue-50"
+              >
+                Login / Register
+              </button>
             </div>
             <div className="-mr-1 lg:hidden">
-              <MobileNavigation
-                redirect={loginWithRedirect}
-                authenticated={isAuthenticated}
-                logout={logout}
-              />
+              <MobileNavigation redirect={loginWithRedirect} />
             </div>
           </div>
         </nav>

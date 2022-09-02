@@ -283,10 +283,10 @@ function PrimaryFeatures() {
                 fill="url(#ca9667ae-9f92-4be7-abcb-9e3d727f2941)"
               />
             </svg>
-            <div className="z-20  mx-1 flex-col rounded-lg md:mx-auto  lg:relative lg:w-[490px] ">
+            <div className="z-20   mx-1 flex-col rounded-lg md:mx-auto  lg:relative lg:w-[490px] ">
               <section
                 id={"demo"}
-                className="space-y-6 rounded-t-lg bg-neon-blue-100 px-4 py-5 sm:px-6"
+                className="space-y-6 rounded-t-lg bg-neon-blue-100 py-7 px-4 sm:px-6  lg:py-6"
               >
                 <div>
                   <h3 className="text-base font-medium leading-6 text-neon-blue-900">
@@ -347,7 +347,7 @@ function PrimaryFeatures() {
                   >
                     What time for the Sesh?
                   </label>
-                  <div className="flex flex-col items-center justify-evenly space-y-2 pt-1 md:flex-row md:space-y-0">
+                  <div className="flex flex-col items-center justify-evenly space-y-3 pt-1 md:flex-row md:space-y-0">
                     <div className="mt-1 flex flex-row items-center rounded-md bg-white px-4 py-2 md:mt-0 ">
                       <ChevronLeftIcon
                         className="w-6 cursor-pointer pr-1"
@@ -367,7 +367,7 @@ function PrimaryFeatures() {
                 </div>
               </section>
               <hr className="w-full border-neon-blue-700" />
-              <section className="flex items-center justify-end space-x-6 rounded-b-md bg-neon-blue-100 px-4 py-5 sm:px-6">
+              <section className="flex items-center justify-end space-x-6 rounded-b-md bg-neon-blue-100 px-4 py-7 sm:px-6 lg:py-6">
                 <button className="inline-block rounded-md bg-red-600 px-2 py-2.5 text-neon-blue-50 hover:bg-red-800 ">
                   Cancel
                 </button>
