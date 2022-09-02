@@ -89,9 +89,9 @@ function MobileNavigation({ redirect, authenticated, logout }: MobileNavProps) {
             as="div"
             className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-neon-blue-100 p-4 text-lg tracking-tight text-neon-blue-900 shadow-xl ring-1 ring-neon-blue-900/5"
           >
-            <MobileNavLink href="#">Product</MobileNavLink>
+            <MobileNavLink href="#demo">Demo</MobileNavLink>
             <MobileNavLink href="#features">Features</MobileNavLink>
-            <MobileNavLink href="#pricing">Pricing</MobileNavLink>
+            <MobileNavLink href="#support">Support</MobileNavLink>
             <MobileNavLink href="#contact">Contact</MobileNavLink>
             <div className="m-1 flex flex-row justify-center py-1">
               <div className="-mr-1 flex lg:hidden">

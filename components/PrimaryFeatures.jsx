@@ -10,7 +10,6 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import clsx from "clsx";
 import InviteReceivedEx from "./InviteReceivedEx";
-import Link from "next/link";
 
 const transferFeatures = [
   {
