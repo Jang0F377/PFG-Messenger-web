@@ -9,6 +9,7 @@ import { TypeAnimation } from "react-type-animation";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import clsx from "clsx";
+import InviteReceivedEx from "./InviteReceivedEx";
 
 const transferFeatures = [
   {
@@ -172,7 +173,7 @@ function PrimaryFeatures() {
   };
 
   return (
-    <div className="overflow-hidden bg-gray-50 py-16 lg:py-24">
+    <div className="overflow-hidden bg-gray-50 py-16 lg:py-24" id="features">
       <div className="relative mx-auto max-w-xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <svg
           className="absolute left-full hidden -translate-x-1/2 -translate-y-1/4 transform lg:block"
@@ -282,24 +283,24 @@ function PrimaryFeatures() {
                 fill="url(#ca9667ae-9f92-4be7-abcb-9e3d727f2941)"
               />
             </svg>
-            <div className="z-20  mx-1 flex-col rounded-lg md:mx-auto md:mx-0 lg:relative lg:w-[490px] ">
+            <div className="z-20  mx-1 flex-col rounded-lg md:mx-auto  lg:relative lg:w-[490px] ">
               <section className="space-y-6 rounded-t-lg bg-neon-blue-100 px-4 py-5 sm:px-6">
                 <div>
                   <h3 className="text-base font-medium leading-6 text-neon-blue-900">
                     Send a Sesh Invite.
                   </h3>
-                  <p className="text-sm text-neon-blue-tone-200">
+                  <p className="mt-0.5 text-xs text-neon-blue-tone-200">
                     Select a recipient and choose the proposed game and time.
                   </p>
                 </div>
                 <div>
                   <label
                     htmlFor="recipient"
-                    className="block text-sm font-medium text-neon-blue-900"
+                    className="block text-xs  font-medium text-neon-blue-900 md:text-sm"
                   >
                     Recipient/s
                   </label>
-                  <div className=" mt-1 block w-full rounded-md border-gray-300 bg-white px-2 py-2 sm:text-sm md:text-base">
+                  <div className=" mt-1 block w-full rounded-md border-gray-300 bg-white px-2 py-2 text-xs  md:text-sm">
                     <TypeAnimation
                       sequence={[
                         "PLANET_SNIPS, Jotch59, silient_bangzs",
@@ -318,11 +319,11 @@ function PrimaryFeatures() {
                 <div>
                   <label
                     htmlFor="recipient"
-                    className="block text-sm font-medium text-neon-blue-900"
+                    className="block text-xs  font-medium text-neon-blue-900 md:text-sm"
                   >
                     What game do you want to suggest?
                   </label>
-                  <div className=" mt-1 block w-full rounded-md border-gray-300 bg-white px-2 py-2 sm:text-sm md:text-base">
+                  <div className=" mt-1 block w-full rounded-md border-gray-300 bg-white px-2 py-2 text-xs  md:text-sm ">
                     <TypeAnimation
                       sequence={[
                         "Apex Legends",
@@ -442,7 +443,7 @@ function PrimaryFeatures() {
 
             <div className="relative -mx-4 mt-10 lg:col-start-1 lg:mt-0">
               <svg
-                className="absolute left-1/2 -translate-x-1/2 translate-y-16 transform lg:hidden"
+                className="absolute left-1/2  -translate-x-1/2 translate-y-16 transform lg:hidden"
                 width={784}
                 height={404}
                 fill="none"
@@ -474,12 +475,7 @@ function PrimaryFeatures() {
                   fill="url(#e80155a9-dfde-425a-b5ea-1f6fadd20131)"
                 />
               </svg>
-              <img
-                className="relative mx-auto"
-                width={490}
-                src="https://tailwindui.com/img/features/feature-example-2.png"
-                alt=""
-              />
+              <InviteReceivedEx />
             </div>
           </div>
         </div>
