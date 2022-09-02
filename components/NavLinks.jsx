@@ -8,9 +8,9 @@ function NavLinks() {
   return (
     <>
       {[
-        ["Product", "#"],
+        ["Demo", "#demo"],
         ["Features", "#features"],
-        ["Pricing", "#pricing"],
+        ["Support", "#support"],
         ["Contact", "#contact"],
       ].map(([label, href], index) => (
         <Link

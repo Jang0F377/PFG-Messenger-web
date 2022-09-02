@@ -2,6 +2,11 @@ import { SVGProps, useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 import clsx from "clsx";
 import Container from "./Container";
+import {
+  FireIcon,
+  GiftIcon,
+  HandThumbUpIcon,
+} from "@heroicons/react/24/outline";
 
 const plans = [
   {
@@ -9,46 +14,63 @@ const plans = [
     featured: false,
     price: { Monthly: "$0", Annually: "$0" },
     description: `You want to try out PFG Messenger.`,
-    buttonLabel: "Get started for free",
+    buttonLabel: "Always free",
     features: [
-      "Commission-free trading",
-      "Multi-layered encryption",
-      "One tip every day",
-      "Invest up to $1,500 each month",
+      "Always free Sesh messenger",
+      "Set up as many Seshions as you want. Forever",
+      "Max of 10 people per invite",
+      "Max of one committed/scheduled Sesh per day ",
     ],
-    logomarkClassName: "fill-gray-300",
+    icon: (
+      <HandThumbUpIcon
+        className={clsx(
+          "h-6 w-6 flex-none fill-neon-blue-200 text-neon-blue-800"
+        )}
+      />
+    ),
   },
   {
     name: "Investor",
     featured: false,
     price: { Monthly: "$2", Annually: "$20" },
-    description: "You’ve want to try out & support PFG Messenger.",
-    buttonLabel: "Subscribe",
+    description: "You want to try out PFG Messenger & support the rebel cause.",
+    buttonLabel: "Support",
     features: [
-      "Commission-free trading",
-      "Multi-layered encryption",
-      "One tip every hour",
-      "Invest up to $15,000 each month",
-      "Basic transaction anonymization",
+      "Always free Sesh messenger",
+      "Set up as many Seshions as you want. Forever",
+      "Max of 15 people per invite",
+      "Max of two committed/scheduled Seshes per day",
+      "Supporter badge",
     ],
-    logomarkClassName: "fill-gray-500",
+    icon: (
+      <GiftIcon
+        className={clsx(
+          "h-6 w-6 flex-none fill-neon-blue-400 text-neon-blue-600 "
+        )}
+      />
+    ),
   },
   {
     name: "VIP",
     featured: true,
-    price: { Monthly: "$20", Annually: "$200" },
-    description: "You want to become a VIP of the Prefire Gaming Community.",
-    buttonLabel: "Subscribe",
+    price: { Monthly: "$10", Annually: "$75" },
+    description:
+      "You want to support & become a VIP of the Prefire Gaming Community.",
+    buttonLabel: "Support",
 
     features: [
-      "Commission-free trading",
-      "Multi-layered encryption",
-      "Real-time tip notifications",
-      "No investment limits",
-      "Advanced transaction anonymization",
-      "Automated tax-loss harvesting",
+      "Always free Sesh messenger",
+      "Set up as many Seshions as you want. Forever",
+      "Max of 20 people per invite",
+      "Max of four committed/scheduled Seshes per day",
+      "Supporter badge",
+      "VIP badge",
     ],
-    logomarkClassName: "fill-cyan-500",
+    icon: (
+      <FireIcon
+        className={clsx("mx-auto h-6 w-6 animate-pulse fill-red-500")}
+      />
+    ),
   },
 ];
 function CheckIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
@@ -82,7 +104,7 @@ interface PlanProps {
   description: string;
   buttonLabel: string;
   features: Array<string>;
-  logomarkClassName: string;
+  icon: JSX.Element;
   activePeriod: string;
 }
 
@@ -94,7 +116,7 @@ function Plan({
   features,
   featured = false,
   activePeriod,
-  logomarkClassName,
+  icon,
 }: PlanProps) {
   return (
     <section
@@ -105,16 +127,12 @@ function Plan({
     >
       <h3
         className={clsx(
-          "flex flex-col items-center text-sm font-semibold",
+          "flex flex-col items-center justify-center text-sm font-semibold",
           featured ? "text-white" : "text-gray-900"
         )}
       >
-        <img
-          src={"/MicrosoftTeams-image-removebg-preview.png"}
-          alt="ERR"
-          className={clsx("-my-7 w-fit", logomarkClassName)}
-        />{" "}
-        <span className="ml-4 text-lg">{name}</span>
+        {icon}
+        <span className="text-lg">{name}</span>
       </h3>
       <p
         className={clsx(
@@ -191,12 +209,12 @@ function Plan({
   );
 }
 
-function Pricing() {
+function Support() {
   let [activePeriod, setActivePeriod] = useState("Monthly");
 
   return (
     <section
-      id="pricing"
+      id="support"
       aria-labelledby="pricing-title"
       className="border-t border-gray-200 bg-neon-blue-800 py-20 "
     >
@@ -206,12 +224,10 @@ function Pricing() {
             id="pricing-title"
             className="text-3xl font-medium tracking-tight text-white"
           >
-            Flat pricing, no hidden fees.
+            PFG Sesh Messenger is always free.
           </h2>
           <p className="mt-2 text-lg text-neon-blue-50">
-            Whether you’re having a tough time coordinating with friends or you
-            have so many friends that you can&apos;t decide who to play with, we
-            have a plan for you.
+            Though we always appreciate the support
           </p>
         </div>
 
@@ -271,4 +287,4 @@ function Pricing() {
   );
 }
 
-export default Pricing;
+export default Support;

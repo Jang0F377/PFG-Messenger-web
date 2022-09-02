@@ -10,6 +10,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import clsx from "clsx";
 import InviteReceivedEx from "./InviteReceivedEx";
+import Link from "next/link";
 
 const transferFeatures = [
   {
@@ -21,14 +22,14 @@ const transferFeatures = [
   },
   {
     id: 2,
-    name: "No hidden fees",
+    name: "No fees!",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
     icon: ScaleIcon,
   },
   {
     id: 3,
-    name: "Transfers are instant",
+    name: "Sesh invites are instant",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
     icon: BoltIcon,
@@ -284,7 +285,10 @@ function PrimaryFeatures() {
               />
             </svg>
             <div className="z-20  mx-1 flex-col rounded-lg md:mx-auto  lg:relative lg:w-[490px] ">
-              <section className="space-y-6 rounded-t-lg bg-neon-blue-100 px-4 py-5 sm:px-6">
+              <section
+                id={"demo"}
+                className="space-y-6 rounded-t-lg bg-neon-blue-100 px-4 py-5 sm:px-6"
+              >
                 <div>
                   <h3 className="text-base font-medium leading-6 text-neon-blue-900">
                     Send a Sesh Invite.
@@ -364,13 +368,16 @@ function PrimaryFeatures() {
                 </div>
               </section>
               <hr className="w-full border-neon-blue-700" />
-              <section className="flex justify-end space-x-6 rounded-b-md bg-neon-blue-100 px-4 py-5 sm:px-6">
+              <section className="flex items-center justify-end space-x-6 rounded-b-md bg-neon-blue-100 px-4 py-5 sm:px-6">
                 <button className="inline-block rounded-md bg-red-600 px-2 py-2.5 text-neon-blue-50 hover:bg-red-800 ">
                   Cancel
                 </button>
-                <button className="inline-block rounded-md bg-neon-blue-600 px-1.5 py-1.5 text-neon-blue-50 hover:bg-neon-blue-800 ">
+                <a
+                  href={"#received"}
+                  className="inline-block items-center rounded-md bg-neon-blue-600 px-2 py-2.5 text-neon-blue-50 hover:bg-neon-blue-800 "
+                >
                   Send Sesh Invite
-                </button>
+                </a>
               </section>
             </div>
           </div>
@@ -475,7 +482,9 @@ function PrimaryFeatures() {
                   fill="url(#e80155a9-dfde-425a-b5ea-1f6fadd20131)"
                 />
               </svg>
-              <InviteReceivedEx />
+              <div id={"received"}>
+                <InviteReceivedEx />
+              </div>
             </div>
           </div>
         </div>

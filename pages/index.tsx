@@ -3,7 +3,8 @@ import Head from "next/head";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import PrimaryFeatures from "../components/PrimaryFeatures";
-import Pricing from "../components/Pricing";
+import Support from "../components/Support";
+import Contact from "../components/Contact";
 
 const Home: NextPage = () => {
   return (
@@ -15,8 +16,8 @@ const Home: NextPage = () => {
       <main>
         <Hero />
         <PrimaryFeatures />
-        <Pricing />
-        {/*Contact*/}
+        <Support />
+        <Contact />
       </main>
     </>
   );
