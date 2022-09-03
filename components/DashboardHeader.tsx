@@ -4,11 +4,9 @@ import { HeaderDashboardNavLinks } from "./DashboardNavLinks";
 import { Fragment } from "react";
 import clsx from "clsx";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 const DashboardHeader = () => {
-  const router = useRouter();
   const { user, logout } = useAuth0();
   const loggedInUser = {
     name: user?.nickname || user?.email,
@@ -17,8 +15,8 @@ const DashboardHeader = () => {
   };
   const navigation = [
     ["Dashboard", "/dashboard"],
-    ["Friends", "/friends"],
-    ["Support", "/support"],
+    ["Friends", "/dashboard#friends"],
+    ["Support PFG", "/support"],
     ["Account", "/account"],
   ];
   return (
@@ -45,15 +43,15 @@ const DashboardHeader = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="hidden md:block">
+                  <div className="hidden items-center md:block">
                     <div className="ml-4 flex items-center md:ml-6">
                       {/* Profile dropdown */}
                       <Menu as="div" className="relative ml-3">
-                        <div>
-                          <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <div className="items-center">
+                          <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm ">
                             <span className="sr-only">Open user menu</span>
                             <img
-                              className="h-8 w-8 rounded-full"
+                              className="h-8 w-8 items-center rounded-full"
                               src={loggedInUser.imageUrl}
                               alt=""
                             />
@@ -107,7 +105,7 @@ const DashboardHeader = () => {
                   </div>
                   <div className="-mr-2 flex md:hidden">
                     {/* Mobile menu button */}
-                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-neon-blue-800 ring-1 ring-neon-blue-800 hover:bg-neon-blue-900 hover:text-white ">
                       <span className="sr-only">Open main menu</span>
                       {open ? (
                         <XMarkIcon

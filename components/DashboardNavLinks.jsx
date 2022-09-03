@@ -9,8 +9,8 @@ export function HeaderDashboardNavLinks() {
     <>
       {[
         ["Dashboard", "/dashboard"],
-        ["Friends", "/friends"],
-        ["Support", "/support"],
+        ["Friends", "/dashboard#friends"],
+        ["Support PFG", "/support"],
         ["Account", "/account"],
       ].map(([label, href], index) => (
         <Link
@@ -50,8 +50,8 @@ export function FooterDashboardNavLinks() {
     <>
       {[
         ["Dashboard", "/dashboard"],
-        ["Friends", "/friends"],
-        ["Support", "/support"],
+        ["Friends", "/dashboard#friends"],
+        ["Support PFG", "/support"],
         ["Account", "/account"],
       ].map(([label, href], index) => (
         <Link

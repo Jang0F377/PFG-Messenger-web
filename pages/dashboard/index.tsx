@@ -4,6 +4,7 @@ import { DashboardPageFooter } from "../../components/Footers";
 import PageNotFound from "../../components/PageNotFound";
 import Loading from "../../components/Loading";
 import DashboardHeader from "../../components/DashboardHeader";
+import Friends from "../../components/Friends";
 
 function Dashboard() {
   const { isLoading, isAuthenticated } = useAuth0();
@@ -56,6 +57,9 @@ function Dashboard() {
                 </div>
               </div>
               {/* /End replace */}
+            </section>
+            <section className="mx-1.5 rounded-lg bg-neon-blue-50 px-2 pb-6 sm:px-3 md:mx-auto md:max-w-2xl lg:max-w-4xl lg:px-4  xl:max-w-7xl">
+              <Friends />
             </section>
           </main>
           <DashboardPageFooter />

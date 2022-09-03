@@ -1,11 +1,7 @@
-import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import {
-  CalendarIcon,
-  CommandLineIcon,
+  CalendarDaysIcon,
   EnvelopeOpenIcon,
-  MegaphoneIcon,
 } from "@heroicons/react/24/outline";
-import clsx from "clsx";
 
 export function EmptyState() {
   return (
@@ -14,12 +10,50 @@ export function EmptyState() {
         Create your first Sesh!
       </h2>
       <p className="mt-1 px-0.5 text-sm text-neon-blue-tone-200 lg:px-1">
-        Get started by adding friends in the friends tab.
+        Send a Sesh invite to someone by email.
       </p>
       <p className="mt-1 px-0.5 text-sm text-neon-blue-tone-200 lg:px-1">
-        Then come back here to start setting up Seshes.
+        Then upcoming Seshes will show up here!
       </p>
       <div className="mx-auto mt-6 flex justify-center">
+        <div className="mx-auto justify-center text-center">
+          <CalendarDaysIcon className="mx-auto h-12 w-12 text-neon-blue-700" />
+          <h2 className="mt-2 text-lg font-medium text-neon-blue-800">
+            Set Sesh
+          </h2>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function InviteEmptyState() {
+  return (
+    <div className=" mx-auto max-w-[16rem] rounded-xl border border-neon-blue-800/70 bg-neon-blue-50 p-3 transition duration-200 ease-in-out hover:translate-y-1 hover:scale-105 lg:hover:scale-110 ">
+      <EnvelopeOpenIcon className="mx-auto h-14 w-14 text-neon-blue-700" />
+      <h3 className="mt-2 text-sm font-medium text-neon-blue-800">
+        No invites
+      </h3>
+      <p className="mt-1 text-sm text-neon-blue-tone-200">
+        Sesh invites you receive will show up here!
+      </p>
+    </div>
+  );
+}
+
+export function FriendListEmptyState() {
+  return (
+    <div className="mx-auto max-w-[16rem]  rounded-xl border border-neon-blue-800/70 bg-neon-blue-50 py-2 transition duration-200 ease-in-out hover:translate-y-1 hover:scale-105 md:max-w-sm lg:hover:scale-110 ">
+      <h2 className="px-0.5 text-lg font-medium text-neon-blue-800 lg:px-1">
+        Add your first friend!
+      </h2>
+      <p className="mt-1 px-0.5 text-sm text-neon-blue-tone-200 lg:px-1">
+        Send a friend an email and invite them to sign up and be your friend.
+      </p>
+      <p className="mt-1 px-0.5 text-xs text-neon-blue-tone-200 lg:px-1 lg:pt-1">
+        Then they can start confirming or declining Seshes.
+      </p>
+      <div className="mx-auto mt-2 flex justify-center">
         <div className="mx-auto justify-center text-center">
           <svg
             className="mx-auto h-12 w-12 text-neon-blue-700"
@@ -44,15 +78,15 @@ export function EmptyState() {
   );
 }
 
-export function InviteEmptyState() {
+export function FriendInviteEmptyState() {
   return (
     <div className="mx-auto max-w-[16rem] rounded-xl border border-neon-blue-800/70 bg-neon-blue-50 p-3 transition duration-200 ease-in-out hover:translate-y-1 hover:scale-105 lg:hover:scale-110 ">
       <EnvelopeOpenIcon className="mx-auto h-14 w-14 text-neon-blue-700" />
       <h3 className="mt-2 text-sm font-medium text-neon-blue-800">
-        No invites
+        No invites yet
       </h3>
       <p className="mt-1 text-sm text-neon-blue-tone-200">
-        Sesh invites you receive will show up here!
+        Friend invites you receive will show up here!
       </p>
     </div>
   );
