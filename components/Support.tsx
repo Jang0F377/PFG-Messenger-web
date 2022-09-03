@@ -32,7 +32,7 @@ const plans = [
   {
     name: "Investor",
     featured: false,
-    price: { Monthly: "$2", Annually: "$20" },
+    price: { Monthly: "$1", Annually: "$10" },
     description: "You want to try out PFG Messenger & support the rebel cause.",
     buttonLabel: "Support",
     features: [
@@ -53,7 +53,7 @@ const plans = [
   {
     name: "VIP",
     featured: true,
-    price: { Monthly: "$10", Annually: "$75" },
+    price: { Monthly: "$3", Annually: "$30" },
     description:
       "You want to support & become a VIP of the Prefire Gaming Community.",
     buttonLabel: "Support",

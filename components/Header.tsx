@@ -3,7 +3,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import { Fragment, useEffect } from "react";
 import Container from "./Container";
-import NavLinks from "./NavLinks";
+import { HeaderNavLinks } from "./NavLinks";
 import {
   LogoutOptions,
   RedirectLoginOptions,
@@ -111,12 +111,7 @@ function MobileNavigation({ redirect }: MobileNavProps) {
 }
 
 function Header() {
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
-  const router = useRouter();
-  useEffect(() => {
-    if (isAuthenticated)
-      router.replace("/dashboard").catch((err) => alert(err));
-  }, [isAuthenticated]);
+  const { loginWithRedirect } = useAuth0();
 
   return (
     <header className=" bg-neon-blue-50 py-4">
@@ -132,7 +127,7 @@ function Header() {
             </Link>
           </div>
           <div className="hidden items-center lg:flex lg:gap-x-14 ">
-            <NavLinks />
+            <HeaderNavLinks />
           </div>
           <div className="flex items-center gap-x-2 lg:gap-x-8">
             <div className="hidden items-center lg:flex lg:space-x-6 ">

@@ -5,6 +5,7 @@ import Hero from "../components/Hero";
 import PrimaryFeatures from "../components/PrimaryFeatures";
 import Support from "../components/Support";
 import Contact from "../components/Contact";
+import { ProductPageFooter } from "../components/Footers";
 
 const Home: NextPage = () => {
   return (
@@ -19,6 +20,7 @@ const Home: NextPage = () => {
         <Support />
         <Contact />
       </main>
+      <ProductPageFooter />
     </>
   );
 };
