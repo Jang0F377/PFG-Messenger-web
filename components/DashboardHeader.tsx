@@ -4,6 +4,7 @@ import { HeaderDashboardNavLinks } from "./DashboardNavLinks";
 import { Fragment } from "react";
 import clsx from "clsx";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const DashboardHeader = () => {
   const { user, logout } = useAuth0();
@@ -128,14 +129,13 @@ const DashboardHeader = () => {
                 {navigation.map((item) => (
                   <Disclosure.Button
                     key={item.name}
-                    as="a"
-                    href={item.href}
+                    as="div"
                     className={clsx(
                       "block rounded-md px-3 py-2 text-base font-medium text-neon-blue-900 hover:bg-neon-blue-800 hover:text-white hover:ring-1 hover:ring-neon-blue-50"
                     )}
                     aria-current={item ? "page" : undefined}
                   >
-                    {item.name}
+                    <Link href={item.href}>{item.name}</Link>
                   </Disclosure.Button>
                 ))}
               </div>

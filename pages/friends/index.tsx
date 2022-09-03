@@ -3,7 +3,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Loading from "../../components/Loading";
 import PageNotFound from "../../components/PageNotFound";
 import DashboardHeader from "../../components/DashboardHeader";
-import Support from "../../components/Support";
 import { EmptyState } from "../../components/EmptyState";
 
 const Friends: React.FC = () => {
