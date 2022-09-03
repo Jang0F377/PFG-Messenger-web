@@ -9,7 +9,7 @@ import clsx from "clsx";
 
 export function EmptyState() {
   return (
-    <div className="mx-auto max-w-[17rem]  rounded-xl border border-neon-blue-800/70 bg-neon-blue-100 py-2 transition duration-200 ease-in-out hover:translate-y-1 hover:scale-105 md:max-w-fit lg:hover:scale-110 ">
+    <div className="mx-auto max-w-[16rem]  rounded-xl border border-neon-blue-800/70 bg-neon-blue-50 py-2 transition duration-200 ease-in-out hover:translate-y-1 hover:scale-105 md:max-w-fit lg:hover:scale-110 ">
       <h2 className="px-0.5 text-lg font-medium text-neon-blue-800 lg:px-1">
         Create your first Sesh!
       </h2>
@@ -46,7 +46,7 @@ export function EmptyState() {
 
 export function InviteEmptyState() {
   return (
-    <div className="mx-auto max-w-[17rem] rounded-xl border border-neon-blue-800/70 bg-neon-blue-100 p-3 transition duration-200 ease-in-out hover:translate-y-1 hover:scale-105 lg:hover:scale-110 ">
+    <div className="mx-auto max-w-[16rem] rounded-xl border border-neon-blue-800/70 bg-neon-blue-50 p-3 transition duration-200 ease-in-out hover:translate-y-1 hover:scale-105 lg:hover:scale-110 ">
       <EnvelopeOpenIcon className="mx-auto h-14 w-14 text-neon-blue-700" />
       <h3 className="mt-2 text-sm font-medium text-neon-blue-800">
         No invites

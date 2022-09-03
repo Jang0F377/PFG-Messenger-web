@@ -1,6 +1,7 @@
 import Container from "./Container";
 import { FooterNavLinks } from "./NavLinks";
 import { FooterDashboardNavLinks } from "./DashboardNavLinks";
+import Link from "next/link";
 
 export const ProductPageFooter = () => {
   return (
@@ -44,6 +45,30 @@ export const DashboardPageFooter = () => {
               <FooterDashboardNavLinks />
             </div>
           </nav>
+        </div>
+        <div className="flex flex-col items-center border-t border-slate-100/10 py-10 sm:flex-row-reverse sm:justify-between">
+          <p className="mt-6 text-sm text-blue-50 sm:mt-0">
+            Copyright &copy; {new Date().getFullYear()} PreFireGaming. All
+            rights reserved.
+          </p>
+        </div>
+      </Container>
+    </footer>
+  );
+};
+
+export const PageNotFoundFooter = () => {
+  return (
+    <footer className="bg-neon-blue-600">
+      <Container className="">
+        <div className="rounded-xl  py-16">
+          <Link href={"/"}>
+            <img
+              src={"/MicrosoftTeams-image-removebg-preview.png"}
+              alt="ERR"
+              className=" mx-auto h-20 w-auto   rounded-full object-cover p-2 "
+            />
+          </Link>
         </div>
         <div className="flex flex-col items-center border-t border-slate-100/10 py-10 sm:flex-row-reverse sm:justify-between">
           <p className="mt-6 text-sm text-blue-50 sm:mt-0">

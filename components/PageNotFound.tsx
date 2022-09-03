@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useAuth0 } from "@auth0/auth0-react";
-import { DashboardPageFooter, ProductPageFooter } from "./Footers";
+import { PageNotFoundFooter, ProductPageFooter } from "./Footers";
 
 const PageNotFound = () => {
   const { isAuthenticated } = useAuth0();
@@ -31,7 +31,7 @@ const PageNotFound = () => {
                   You may have to sign in to be able to access this page.
                 </p>
                 <div className="mt-6">
-                  <Link href={isAuthenticated ? "/dashboard" : "/"}>
+                  <Link href={"/"}>
                     <button className="text-base font-medium text-neon-blue-700 hover:text-indigo-500">
                       Go back home
                       <span aria-hidden="true"> &rarr;</span>
@@ -41,7 +41,7 @@ const PageNotFound = () => {
               </div>
             </div>
           </main>
-          {isAuthenticated ? <DashboardPageFooter /> : <ProductPageFooter />}
+          <PageNotFoundFooter />
         </div>
       </div>
     </>

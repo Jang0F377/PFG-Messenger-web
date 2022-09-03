@@ -8,7 +8,7 @@ export function HeaderDashboardNavLinks() {
   return (
     <>
       {[
-        ["Dashboard", "#dashboard"],
+        ["Dashboard", "/dashboard"],
         ["Friends", "/friends"],
         ["Support", "/support"],
         ["Account", "/account"],
@@ -49,7 +49,7 @@ export function FooterDashboardNavLinks() {
   return (
     <>
       {[
-        ["Dashboard", "#dashboard"],
+        ["Dashboard", "/dashboard"],
         ["Friends", "/friends"],
         ["Support", "/support"],
         ["Account", "/account"],
