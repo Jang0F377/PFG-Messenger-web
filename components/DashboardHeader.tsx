@@ -4,9 +4,11 @@ import { HeaderDashboardNavLinks } from "./DashboardNavLinks";
 import { Fragment } from "react";
 import clsx from "clsx";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 const DashboardHeader = () => {
+  const router = useRouter();
   const { user, logout } = useAuth0();
   const loggedInUser = {
     name: user?.nickname || user?.email,
@@ -14,10 +16,10 @@ const DashboardHeader = () => {
     imageUrl: user?.picture,
   };
   const navigation = [
-    { name: "Dashboard", href: "/dashboard" },
-    { name: "Friends", href: "/friends" },
-    { name: "Support Sesh", href: "/support" },
-    { name: "Account", href: "/account" },
+    ["Dashboard", "/dashboard"],
+    ["Friends", "/friends"],
+    ["Support", "/support"],
+    ["Account", "/account"],
   ];
   return (
     <>
@@ -126,17 +128,14 @@ const DashboardHeader = () => {
 
             <Disclosure.Panel className="md:hidden">
               <div className="space-y-1 px-2 py-3 sm:px-3">
-                {navigation.map((item) => (
-                  <Disclosure.Button
-                    key={item.name}
-                    as="div"
-                    className={clsx(
-                      "block rounded-md px-3 py-2 text-base font-medium text-neon-blue-900 hover:bg-neon-blue-800 hover:text-white hover:ring-1 hover:ring-neon-blue-50"
-                    )}
-                    aria-current={item ? "page" : undefined}
+                {navigation.map(([label, href]) => (
+                  <Link
+                    key={label}
+                    href={href}
+                    className="block cursor-pointer rounded-md px-3 py-2 text-base font-medium text-neon-blue-900 hover:bg-neon-blue-800 hover:text-white hover:ring-1 hover:ring-neon-blue-50"
                   >
-                    <Link href={item.href}>{item.name}</Link>
-                  </Disclosure.Button>
+                    <div aria-current={label ? "page" : undefined}>{label}</div>
+                  </Link>
                 ))}
               </div>
               <div className="border-t border-gray-700 pt-4 pb-3">
