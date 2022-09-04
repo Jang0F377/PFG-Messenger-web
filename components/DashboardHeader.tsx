@@ -16,6 +16,7 @@ const DashboardHeader = () => {
   const navigation = [
     ["Dashboard", "/dashboard"],
     ["Friends", "/dashboard#friends"],
+    ["Users", "/users"],
     ["Support PFG", "/support"],
     ["Account", "/account"],
   ];

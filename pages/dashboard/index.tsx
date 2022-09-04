@@ -5,9 +5,42 @@ import PageNotFound from "../../components/PageNotFound";
 import Loading from "../../components/Loading";
 import DashboardHeader from "../../components/DashboardHeader";
 import Friends from "../../components/Friends";
+import { GeneralNotification } from "../../components/Notifications";
+import { useEffect, useState } from "react";
+import { sanityClient } from "../../sanity";
 
 function Dashboard() {
-  const { isLoading, isAuthenticated } = useAuth0();
+  const [name, setName] = useState<string | undefined>();
+  const { user, isLoading, isAuthenticated } = useAuth0();
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const loggedInUser = {
+    email: user?.email,
+    image: user?.picture,
+  };
+
+  const handleNewUser = async () => {
+    await fetch("/api/createUser", {
+      method: "POST",
+      body: JSON.stringify(loggedInUser),
+    })
+      .then(() => console.log("Sent to Sanity"))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    setName(user?.email);
+    if (name) {
+      newUser(name)
+        .then((res) => {
+          if (res) {
+            handleNewUser().catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [name, user?.email]);
 
   if (isLoading) {
     return <Loading />;
@@ -16,6 +49,28 @@ function Dashboard() {
   if (!isAuthenticated) {
     return <PageNotFound />;
   }
+
+  const showSuccessNotification = () => {
+    setError(false);
+    setSuccess(true);
+    setShowNotification(true);
+  };
+  const showErrorNotification = () => {
+    setSuccess(false);
+    setError(true);
+    setShowNotification(true);
+  };
+
+  const resetState = () => {
+    setSuccess(false);
+    setShowNotification(false);
+    setError(false);
+  };
+
+  const handleClick = () => {
+    // showSuccessNotification();
+    // setTimeout(() => resetState(), 2000);
+  };
 
   return (
     <>
@@ -39,7 +94,10 @@ function Dashboard() {
                 <h1 className="-mt-5  text-left text-xl font-medium">
                   Upcoming Seshes
                 </h1>
-                <div className="flex h-96 items-center rounded-lg border-4 border border-neon-blue-800/50">
+                <div
+                  onClick={() => handleClick()}
+                  className="flex h-96 items-center rounded-lg border-4 border border-neon-blue-800/50"
+                >
                   <EmptyState />
                 </div>
               </div>
@@ -63,6 +121,24 @@ function Dashboard() {
             </section>
           </main>
           <DashboardPageFooter />
+          {/*Notification insert here!!*/}
+          <div
+            aria-live="assertive"
+            className="pointer-events-none fixed inset-0 z-50 flex items-end px-4 py-6 sm:items-start sm:p-6"
+          >
+            {success && showNotification && (
+              <GeneralNotification
+                success={success}
+                outShow={showNotification}
+              />
+            )}
+            {error && showNotification && (
+              <GeneralNotification
+                success={!error}
+                outShow={showNotification}
+              />
+            )}
+          </div>
         </div>
       )}
     </>
@@ -70,3 +146,17 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
+async function newUser(name: string | undefined) {
+  const params = { name: name };
+  const query = `*[_type == "user" && email == $name]
+  `;
+  const user = await sanityClient.fetch(query, params);
+  if (user[0]?.email) {
+    console.log("USER FOUND");
+    return false;
+  } else {
+    console.log("NO USER");
+    return true;
+  }
+}
