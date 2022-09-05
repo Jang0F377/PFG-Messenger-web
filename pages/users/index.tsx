@@ -37,7 +37,7 @@ const Users = ({ users }: UsersProps) => {
           </header>
         </div>
         <Container className=" bg-neon-blue-50 pt-3">
-          <section className="  flex flex-col justify-evenly space-y-3  md:mx-0 md:flex-row md:space-y-0 md:space-x-3 ">
+          <section className=" flex flex-col justify-evenly md:flex-row md:flex-wrap ">
             {users.map((user) => (
               <UserList key={user.email} user={user} />
             ))}

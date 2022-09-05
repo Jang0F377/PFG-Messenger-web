@@ -10,7 +10,7 @@ const UserList = ({ user }: UserListProps) => {
   const gamesPlayed = user?.gamesPlayed?.slice(0, 3);
 
   return (
-    <div className="mx-auto w-[18rem] justify-center rounded-lg bg-neon-blue-300 shadow md:mx-0">
+    <div className="m-3 mx-auto w-[18rem] justify-center rounded-lg bg-neon-blue-300 shadow md:mx-0">
       <div className="px-3 py-4 sm:px-5">
         <header className="mx-auto flex flex-col  space-y-1 text-center">
           <CustomAvatar image={user?.image} size={"md"} />
