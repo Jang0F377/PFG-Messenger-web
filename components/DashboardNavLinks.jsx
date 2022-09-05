@@ -11,7 +11,6 @@ export function HeaderDashboardNavLinks() {
         ["Dashboard", "/dashboard"],
         ["Friends", "/dashboard#friends"],
         ["Users", "/users"],
-
         ["Support PFG", "/support"],
         ["Account", "/account"],
       ].map(([label, href], index) => (
