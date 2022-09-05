@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import DashboardHeader from "../../components/DashboardHeader";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { sanityClient } from "../../sanity";
 import { User } from "../../typings";
 import UserList from "../../components/UserList";
@@ -50,7 +50,7 @@ const Users = ({ users }: UsersProps) => {
 
 export default Users;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const query = `*[_type == "user"]{
     _id,
     email,
