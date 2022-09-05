@@ -94,10 +94,7 @@ function Dashboard() {
                 <h1 className="-mt-5  text-left text-xl font-medium">
                   Upcoming Seshes
                 </h1>
-                <div
-                  onClick={() => handleClick()}
-                  className="flex h-96 items-center rounded-lg border-4 border border-neon-blue-800/50"
-                >
+                <div className="flex h-96 items-center rounded-lg border-4 border border-neon-blue-800/50">
                   <EmptyState />
                 </div>
               </div>

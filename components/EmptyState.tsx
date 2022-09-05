@@ -2,10 +2,24 @@ import {
   CalendarDaysIcon,
   EnvelopeOpenIcon,
 } from "@heroicons/react/24/outline";
+import { useState } from "react";
+import { SeshSendInviteModal } from "./Modals";
 
 export function EmptyState() {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
-    <div className="mx-auto max-w-[16rem]  rounded-xl border border-neon-blue-800/70 bg-neon-blue-50 py-2 transition duration-200 ease-in-out hover:translate-y-1 hover:scale-105 md:max-w-fit lg:hover:scale-110 ">
+    <div
+      onClick={() => handleShowModal()}
+      className="mx-auto max-w-[16rem]  rounded-xl border border-neon-blue-800/70 bg-neon-blue-50 py-2 transition duration-200 ease-in-out hover:translate-y-1 hover:scale-105 md:max-w-fit lg:hover:scale-110 "
+    >
       <h2 className="px-0.5 text-lg font-medium text-neon-blue-800 lg:px-1">
         Create your first Sesh!
       </h2>
@@ -23,6 +37,11 @@ export function EmptyState() {
           </h2>
         </div>
       </div>
+      <SeshSendInviteModal
+        open={showModal}
+        handleClose={handleCloseModal}
+        specificRecipient={undefined}
+      />
     </div>
   );
 }

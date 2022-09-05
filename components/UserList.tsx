@@ -1,12 +1,22 @@
 import { User } from "../typings";
 import CustomAvatar from "./CustomAvatar";
 import CustomDivider from "./CustomDivider";
+import { useState } from "react";
+import { SeshSendInviteModal } from "./Modals";
 
 interface UserListProps {
   user: User;
 }
 
 const UserList = ({ user }: UserListProps) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
   const gamesPlayed = user?.gamesPlayed?.slice(0, 3);
 
   return (
@@ -50,10 +60,16 @@ const UserList = ({ user }: UserListProps) => {
         <button
           className="rounded-lg bg-neon-blue-700 px-1.5 py-2.5 text-xs font-medium text-neon-blue-50 lg:text-sm"
           type={"button"}
+          onClick={handleShowModal}
         >
           A Sesh invite
         </button>
       </div>
+      <SeshSendInviteModal
+        open={showModal}
+        handleClose={handleCloseModal}
+        specificRecipient={user?.email}
+      />
     </div>
   );
 };
