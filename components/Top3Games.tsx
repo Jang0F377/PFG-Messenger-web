@@ -71,6 +71,7 @@ const Top3Games = ({ top3User, gameArr }: Top3GamesProps) => {
               <input
                 type={"text"}
                 value={game1}
+                autoComplete="text"
                 placeholder={data[0]}
                 onChange={(e) => setGame1(e.target.value)}
                 className="my-0.5 rounded placeholder:text-gray-300"
@@ -78,6 +79,7 @@ const Top3Games = ({ top3User, gameArr }: Top3GamesProps) => {
               <input
                 type={"text"}
                 value={game2}
+                autoComplete="text"
                 placeholder={data[1]}
                 onChange={(e) => setGame2(e.target.value)}
                 className="my-0.5 rounded placeholder:text-gray-300"
@@ -85,6 +87,7 @@ const Top3Games = ({ top3User, gameArr }: Top3GamesProps) => {
               <input
                 type={"text"}
                 value={game3}
+                autoComplete="text"
                 placeholder={data[2]}
                 onChange={(e) => setGame3(e.target.value)}
                 className="my-0.5 rounded placeholder:text-gray-300"
@@ -104,11 +107,13 @@ const Top3Games = ({ top3User, gameArr }: Top3GamesProps) => {
               <input
                 type={"text"}
                 value={game1}
+                autoComplete="text"
                 onChange={(e) => setGame1(e.target.value)}
                 className="my-0.5 rounded"
               />
               <input
                 type={"text"}
+                autoComplete="text"
                 value={game2}
                 onChange={(e) => setGame2(e.target.value)}
                 className="my-0.5 rounded"
@@ -116,6 +121,7 @@ const Top3Games = ({ top3User, gameArr }: Top3GamesProps) => {
               <input
                 type={"text"}
                 value={game3}
+                autoComplete="text"
                 onChange={(e) => setGame3(e.target.value)}
                 className="my-0.5 rounded"
               />

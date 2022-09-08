@@ -10,7 +10,7 @@ import { User } from "../../typings";
 
 function Account() {
   const [data, setData] = useState<User | undefined>();
-  const [myLoading, setMyLoading] = useState(true);
+  const [myLoading, setMyLoading] = useState(false);
   const { user, isLoading, isAuthenticated } = useAuth0();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
