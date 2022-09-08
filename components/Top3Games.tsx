@@ -1,27 +1,19 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { sanityClient } from "../sanity";
+import { useState } from "react";
+import { User } from "../typings";
 
 interface Top3GamesProps {
-  name: string | undefined;
+  top3User: User | undefined;
+  gameArr: Array<string> | undefined;
 }
-const Top3Games = ({ name }: Top3GamesProps) => {
+const Top3Games = ({ top3User, gameArr }: Top3GamesProps) => {
   const router = useRouter();
-  const [data, setData] = useState([]);
-  const [uid, setUid] = useState("");
+  const data = gameArr;
+  const uid = top3User?._id;
   const [editing, setEditing] = useState(false);
   const [game1, setGame1] = useState("");
   const [game2, setGame2] = useState("");
   const [game3, setGame3] = useState("");
-  const retrieveData = async () => {
-    const params = { name: name };
-    const query = `*[_type == "user" && email == $name]
-    {gamesPlayed,
-    _id
-    }
-  `;
-    return sanityClient.fetch(query, params);
-  };
 
   const submitTop3 = async () => {
     await fetch("/api/myTop3", {
@@ -34,8 +26,9 @@ const Top3Games = ({ name }: Top3GamesProps) => {
       }),
     })
       .then((res) => {
+        setEditing(false);
         if (res.ok) {
-          router.replace("/dashboard");
+          router.reload();
         } else {
           alert("Unsuccessful please try again");
           router.replace("/dashboard");
@@ -43,15 +36,6 @@ const Top3Games = ({ name }: Top3GamesProps) => {
       })
       .catch((err) => console.log(err));
   };
-
-  useEffect(() => {
-    retrieveData()
-      .then((res) => {
-        setData(res[0].gamesPlayed);
-        setUid(res[0]._id);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <div className="flex items-center justify-between space-x-1 ">

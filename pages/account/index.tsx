@@ -2,21 +2,55 @@ import DashboardHeader from "../../components/DashboardHeader";
 import { useAuth0 } from "@auth0/auth0-react";
 import Loading from "../../components/Loading";
 import PageNotFound from "../../components/PageNotFound";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Top3Games from "../../components/Top3Games";
+import { sanityClient } from "../../sanity";
+import { User } from "../../typings";
 
 function Account() {
+  const [data, setData] = useState<User | undefined>();
+  const [myLoading, setMyLoading] = useState(true);
   const { user, isLoading, isAuthenticated } = useAuth0();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-
   const clearState = () => {
     setFirstName("");
     setLastName("");
   };
 
-  if (isLoading) {
+  async function getUser(name: string | undefined) {
+    const params = { name: name };
+    const query = `*[_type == "user" && email == $name]
+  `;
+    const sanUser = await sanityClient.fetch(query, params);
+    if (sanUser) {
+      return sanUser[0];
+    } else {
+      console.log("NO USER");
+      return undefined;
+    }
+  }
+
+  useEffect(() => {
+    setMyLoading(true);
+    if (user?.email) {
+      getUser(user?.email).then((res) => {
+        if (res) {
+          setData(res);
+          setMyLoading(false);
+        } else {
+          console.log(res);
+          setMyLoading(false);
+        }
+      });
+    }
+  }, [user?.email]);
+  useEffect(() => {
+    return () => clearState();
+  }, []);
+
+  if (isLoading || myLoading) {
     return <Loading />;
   }
 
@@ -127,7 +161,7 @@ function Account() {
                 </div>
               </div>
               <div className="sm:col-span-3">
-                <Top3Games name={user?.email} />
+                <Top3Games gameArr={data?.gamesPlayed} top3User={data} />
               </div>
             </div>
 
@@ -148,7 +182,7 @@ function Account() {
                   type="text"
                   name="first-name"
                   id="first-name"
-                  defaultValue={firstName}
+                  value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   autoComplete="given-name"
                   className="mt-1 block w-full rounded-md border-neon-blue-900 text-neon-blue-900 shadow-sm focus:ring-neon-blue-300  sm:text-sm"
@@ -166,7 +200,7 @@ function Account() {
                   type="text"
                   name="last-name"
                   id="last-name"
-                  defaultValue={lastName}
+                  value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   autoComplete="family-name"
                   className="mt-1 block w-full rounded-md border-neon-blue-900 text-neon-blue-900 shadow-sm focus:ring-neon-blue-300  sm:text-sm"
@@ -223,6 +257,7 @@ function Account() {
             <div className="flex justify-end pt-8">
               <button
                 type="button"
+                onClick={() => clearState()}
                 className="text-blue-gray-900 hover:bg-blue-gray-50 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 Cancel
