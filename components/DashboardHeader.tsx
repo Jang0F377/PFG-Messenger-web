@@ -20,6 +20,12 @@ const DashboardHeader = () => {
     ["Support PFG", "/support"],
     ["Account", "/account"],
   ];
+
+  const handleLogout = () => {
+    logout({
+      returnTo: "https://pfg-messenger-web.vercel.app/",
+    });
+  };
   return (
     <>
       <Disclosure as="nav" className="bg-neon-blue-50">
@@ -84,12 +90,7 @@ const DashboardHeader = () => {
                             <Menu.Item>
                               {({ active }) => (
                                 <a
-                                  onClick={() =>
-                                    logout({
-                                      returnTo:
-                                        "https://pfg-messenger-web.vercel.app/",
-                                    })
-                                  }
+                                  onClick={handleLogout}
                                   className={clsx(
                                     active ? "bg-gray-100" : "",
                                     "block cursor-pointer px-4 py-2 text-sm text-gray-700"
@@ -164,11 +165,7 @@ const DashboardHeader = () => {
                     Settings
                   </Disclosure.Button>
                   <Disclosure.Button
-                    onClick={() =>
-                      logout({
-                        returnTo: "https://pfg-messenger-web.vercel.app/",
-                      })
-                    }
+                    onClick={handleLogout}
                     as="a"
                     className="block cursor-pointer rounded-md px-3 py-2 text-base font-medium text-neon-blue-900 hover:bg-neon-blue-800 hover:text-white hover:ring-1 hover:ring-neon-blue-50"
                   >

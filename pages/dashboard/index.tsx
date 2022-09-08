@@ -67,10 +67,10 @@ function Dashboard() {
     setError(false);
   };
 
-  const handleClick = () => {
+  /*  const handleClick = () => {
     // showSuccessNotification();
     // setTimeout(() => resetState(), 2000);
-  };
+  };*/
 
   return (
     <>

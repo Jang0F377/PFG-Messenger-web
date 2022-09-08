@@ -1,8 +1,15 @@
 import { Fragment, SetStateAction, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { PlusCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import {
+  CheckCircleIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/20/solid";
 import clsx from "clsx";
+import { sanityClient } from "../sanity";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useRouter } from "next/router";
 
 interface ModalProps {
   open: boolean;
@@ -15,15 +22,21 @@ export const SeshSendInviteModal = ({
   handleClose,
   specificRecipient,
 }: ModalProps) => {
-  const [recipients, setRecipients] = useState<Array<string>>();
+  const { user } = useAuth0();
+  const router = useRouter();
+  const [myId, setMyId] = useState("");
+  const [recipientsEmails, setRecipientsEmails] = useState<Array<string>>();
+  const [recipientsIds, setRecipientsIds] = useState<Array<string>>();
   const [recipient, setRecipient] = useState(
     specificRecipient ? specificRecipient : ""
   );
   const [hour, setHour] = useState(8);
+  const [day, setDay] = useState("today");
   const AM = "AM";
   const PM = "PM";
   const [morningOrEvening, setMorningOrEvening] = useState(AM);
   const [selected, setSelected] = useState("00");
+  const [game, setGame] = useState("");
   const selectTime = (event: {
     currentTarget: { id: SetStateAction<string> };
   }) => {
@@ -53,23 +66,67 @@ export const SeshSendInviteModal = ({
       setHour(hour - 1);
     }
   };
+  const getMyId = async (email: string | undefined) => {
+    const query = `*[_type == "user" && email == $name]{
+      _id
+    }`;
+
+    return sanityClient.fetch(query, { name: email });
+  };
+
+  async function verifyUser(email: string) {
+    const query = `*[_type == "user" && email == $name]{
+      _id
+    }`;
+    return sanityClient.fetch(query, { name: email });
+  }
+
   const handleAddRecipient = (email: string) => {
-    setRecipients([...(recipients ?? []), email]);
-    setRecipient("");
+    verifyUser(email)
+      .then((res) => {
+        if (res.length) {
+          setRecipientsIds([...(recipientsIds ?? []), res[0]._id]);
+          setRecipientsEmails([...(recipientsEmails ?? []), email]);
+        } else {
+          alert("Please try again not active user!");
+        }
+      })
+      .then(() => setRecipient(""))
+      .catch((err) => console.warn(err));
   };
   const handleResetState = () => {
     handleClose();
-    setRecipients(undefined);
+    setRecipientsIds(undefined);
+    setRecipientsEmails(undefined);
     setRecipient(specificRecipient ? specificRecipient : "");
   };
-  const handleSend = () => {
-    alert(
-      "Invite sent to " +
-        recipients +
-        "at" +
-        `${hour} ${selected} ${morningOrEvening}`
-    );
+  const handleSend = async () => {
+    await fetch("/api/createSesh", {
+      method: "POST",
+      body: JSON.stringify({
+        recipients: recipientsIds,
+        game: game,
+        proposedTime: `${hour}:${selected} ${morningOrEvening}`,
+        proposedDay: day,
+        sentFrom: myId,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          router.replace("/dashboard");
+        } else {
+          alert("Unsuccessful please try again");
+          router.replace("/dashboard");
+        }
+      })
+      .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    if (open) {
+      getMyId(user?.email).then((r) => setMyId(r[0]._id));
+    }
+  }, [open, user?.email]);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -119,15 +176,15 @@ export const SeshSendInviteModal = ({
                       >
                         Recipient/s
                       </label>
-                      {recipients?.length ? (
+                      {recipientsEmails?.length ? (
                         <ul className="text-center md:text-left">
-                          {recipients.map((game) => (
-                            <li
-                              key={game}
-                              className="p-0.5 text-xs text-neon-blue-900"
-                            >
-                              {game}
-                            </li>
+                          {recipientsEmails.map((email) => (
+                            <div key={email} className="flex flex-row">
+                              <CheckCircleIcon className="h-4 w-4 text-green-600" />
+                              <li className="p-0.5 text-xs text-neon-blue-900">
+                                {email}
+                              </li>
+                            </div>
                           ))}
                         </ul>
                       ) : (
@@ -154,7 +211,7 @@ export const SeshSendInviteModal = ({
                       </div>
                     </div>
                   </section>
-                  <section className="space-y-6 bg-neon-blue-100 px-4 pb-5 sm:px-6">
+                  <section className="space-y-4 bg-neon-blue-100 px-4 pb-5 sm:px-6">
                     <div>
                       <label
                         htmlFor="game"
@@ -166,6 +223,29 @@ export const SeshSendInviteModal = ({
                         type="text"
                         name="game"
                         id="game"
+                        value={game}
+                        onChange={(e) => setGame(e.target.value)}
+                        autoComplete="text"
+                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="game"
+                        className="block text-xs  font-medium text-neon-blue-900 md:text-sm"
+                      >
+                        When?
+                      </label>
+                      <p className=" text-xs text-neon-blue-tone-200">
+                        Ex. today, tomorrow, or date format eg.{" "}
+                        {new Date().toLocaleDateString()}
+                      </p>
+                      <input
+                        type="text"
+                        name="game"
+                        id="game"
+                        value={day}
+                        onChange={(e) => setDay(e.target.value)}
                         autoComplete="text"
                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
@@ -280,8 +360,9 @@ export const SeshSendInviteModal = ({
                     </button>
                     <button
                       disabled={
-                        recipients?.length === undefined ||
-                        recipients?.length <= 0
+                        recipientsIds?.length === undefined ||
+                        recipientsIds?.length <= 0 ||
+                        !game
                       }
                       onClick={handleSend}
                       className="inline-block items-center rounded-md bg-neon-blue-600 px-2 py-2.5 text-neon-blue-50 hover:bg-neon-blue-800 disabled:pointer-events-none disabled:bg-gray-400 "

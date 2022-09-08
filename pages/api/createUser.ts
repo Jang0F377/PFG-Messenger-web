@@ -20,5 +20,5 @@ export default async function createUser(
     console.warn(err);
     return res.status(500).json({ message: `Couldn't submit user`, err });
   }
-  res.status(200).json({ message: "User submitted Successfully" });
+  res.status(200).json({ message: "User submitted successfully" });
 }
