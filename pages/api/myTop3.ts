@@ -13,13 +13,10 @@ export default async function myTop3(
       .patch(_id)
       .set({ gamesPlayed: [game1, game2, game3] })
       .commit()
-      .then(() => {
-        console.log("UPDATED");
-      })
       .catch((err) => console.warn(err));
+    res.status(200).json({ message: "Top3 submitted Successfully" });
   } catch (e) {
     alert(e);
     return res.status(500).json({ message: `Couldn't submit Top3`, e });
   }
-  res.status(200).json({ message: "Top3 submitted Successfully" });
 }

@@ -13,6 +13,7 @@ export default async function createUser(
       _type: "user",
       email,
       image,
+      firstTime: false,
       supporter: false,
       vip: false,
     });

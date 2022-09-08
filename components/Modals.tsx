@@ -381,3 +381,124 @@ export const SeshSendInviteModal = ({
 };
 
 export const SeshReceiveInviteModal = ({ open }: ModalProps) => {};
+
+export const WelcomeModal = ({
+  open,
+  handleClose,
+  specificRecipient,
+}: ModalProps) => {
+  const [game1, setGame1] = useState("");
+  const [game2, setGame2] = useState("");
+  const [game3, setGame3] = useState("");
+
+  const handleSubmit = async () => {
+    await fetch("/api/myTop3", {
+      method: "POST",
+      body: JSON.stringify({
+        game1: game1,
+        game2: game2,
+        game3: game3,
+        _id: specificRecipient,
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        handleClose();
+      } else {
+        alert(
+          "Sorry, something went wrong. Please visit the Account page to input this "
+        );
+        handleClose();
+      }
+    });
+  };
+
+  return (
+    <Transition.Root show={open} as={Fragment}>
+      <Dialog as="div" className="relative z-30" onClose={() => handleClose()}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
+
+        <div className="fixed inset-0 z-40 overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-fit sm:max-w-xl sm:p-6">
+                <div className="flex items-center justify-between space-y-1 ">
+                  <div className="flex flex-col">
+                    <label className="ml-1 block  font-medium text-neon-blue-900">
+                      My Top 3 Games:
+                    </label>
+                    <div className="flex flex-col space-y-3 ">
+                      <div className="flex flex-col items-center justify-evenly space-x-0 space-y-1 md:flex-row md:space-x-3 md:space-y-0">
+                        <label className=" block  text-sm font-medium text-neon-blue-900">
+                          1.
+                        </label>
+                        <input
+                          type={"text"}
+                          value={game1}
+                          autoComplete="text"
+                          onChange={(e) => setGame1(e.target.value)}
+                          className="rounded"
+                        />
+                      </div>
+                      <div className="flex flex-col items-center justify-evenly space-x-0 space-y-1 md:flex-row md:space-x-3 md:space-y-0">
+                        <label className=" block  text-sm font-medium text-neon-blue-900">
+                          2.
+                        </label>
+
+                        <input
+                          type={"text"}
+                          autoComplete="text"
+                          value={game2}
+                          onChange={(e) => setGame2(e.target.value)}
+                          className="rounded"
+                        />
+                      </div>
+                      <div className="flex flex-col items-center justify-evenly space-x-0 space-y-1 md:flex-row md:space-x-3 md:space-y-0">
+                        <label className=" block  text-sm font-medium text-neon-blue-900">
+                          3.
+                        </label>
+
+                        <input
+                          type={"text"}
+                          value={game3}
+                          autoComplete="text"
+                          onChange={(e) => setGame3(e.target.value)}
+                          className=" rounded"
+                        />
+                      </div>
+                      <button
+                        type={"button"}
+                        disabled={!game1 || !game2 || !game3}
+                        onClick={handleSubmit}
+                        className="my-0.5 mt-2 inline-block rounded-lg bg-neon-blue-600 px-1.5 py-2 text-sm font-medium text-neon-blue-50 hover:bg-neon-blue-800 disabled:bg-gray-400"
+                      >
+                        Set
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition.Root>
+  );
+};

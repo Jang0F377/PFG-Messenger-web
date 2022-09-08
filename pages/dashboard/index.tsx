@@ -8,9 +8,12 @@ import Friends from "../../components/Friends";
 import { GeneralNotification } from "../../components/Notifications";
 import { useEffect, useState } from "react";
 import { sanityClient } from "../../sanity";
+import { WelcomeModal } from "../../components/Modals";
 
 function Dashboard() {
   const [name, setName] = useState<string | undefined>();
+  const [passUserId, setPassUserId] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const { user, isLoading, isAuthenticated } = useAuth0();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -18,6 +21,9 @@ function Dashboard() {
   const loggedInUser = {
     email: user?.email,
     image: user?.picture,
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   const handleNewUser = async () => {
@@ -32,10 +38,18 @@ function Dashboard() {
   useEffect(() => {
     setName(user?.email);
     if (name) {
-      newUser(name)
+      firstVisit(name)
         .then((res) => {
           if (res) {
-            handleNewUser().catch((err) => console.log(err));
+            setShowModal(true);
+            handleNewUser().then(async () => {
+              const params = { name: name };
+              const query = `*[_type == "user" && email == $name]{_id}`;
+              const usedId = await sanityClient.fetch(query, params);
+              if (usedId[0]?._id) {
+                setPassUserId(usedId[0]?._id);
+              }
+            });
           }
         })
         .catch((err) => console.log(err));
@@ -136,6 +150,12 @@ function Dashboard() {
               />
             )}
           </div>
+          {/*MODAL*/}
+          <WelcomeModal
+            handleClose={handleCloseModal}
+            open={showModal}
+            specificRecipient={passUserId}
+          />
         </div>
       )}
     </>
@@ -144,16 +164,18 @@ function Dashboard() {
 
 export default Dashboard;
 
-async function newUser(name: string | undefined) {
+async function firstVisit(name: string | undefined) {
   const params = { name: name };
-  const query = `*[_type == "user" && email == $name]
+  const query = `*[_type == "user" && email == $name]{
+    firstTime
+  }
   `;
   const user = await sanityClient.fetch(query, params);
-  if (user[0]?.email) {
-    console.log("USER FOUND");
-    return false;
-  } else {
-    console.log("NO USER");
+  if (user[0]?.firstTime !== false) {
+    console.log("First Visit");
     return true;
+  } else {
+    console.log("Welcome back");
+    return false;
   }
 }

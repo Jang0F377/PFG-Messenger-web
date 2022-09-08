@@ -83,7 +83,7 @@ function Account() {
                 </label>
                 <div className="mt-1 flex rounded-md ">
                   <h6 className=" block w-full  text-neon-blue-900  sm:text-sm">
-                    {user?.email}
+                    {data?.email}
                   </h6>
                 </div>
               </div>
@@ -96,7 +96,7 @@ function Account() {
                 </label>
                 <div className="mt-1 flex rounded-md ">
                   <h6 className=" block w-full  text-neon-blue-900  sm:text-sm">
-                    {user?.nickname}
+                    {data?.email.split("@")[0]}
                   </h6>
                 </div>
               </div>
