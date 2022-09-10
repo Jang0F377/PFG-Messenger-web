@@ -118,7 +118,7 @@ function Header() {
       <Container className="">
         <nav className="relative z-50 flex justify-between  ">
           <div className=" flex items-center  xs:mx-auto lg:mx-0  lg:gap-x-12">
-            <Link href="#" aria-label="Home">
+            <Link href="src/components/Header#" aria-label="Home">
               <img
                 src={"/MicrosoftTeams-image-removebg-preview.png"}
                 alt="ERR"

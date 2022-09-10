@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { sanityClient } from "../../sanity";
+import { sanityClient } from "../../../sanity";
 
 export default async function createSesh(
   req: NextApiRequest,
@@ -9,9 +9,8 @@ export default async function createSesh(
   const { recipients, game, proposedTime, proposedDay, sentFrom } = JSON.parse(
     req.body
   );
-  const date = new Date().toLocaleTimeString();
-  const date1 = date.replace(/[^0-9A-Z*]/g, ".");
-  const givenId = `${date1}.${proposedDay}`;
+  const date = new Date().getTime();
+  const givenId = `${date}.${proposedDay}`;
 
   try {
     await sanityClient.create({

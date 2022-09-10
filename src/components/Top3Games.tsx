@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { User } from "../typings";
+import { User } from "../../typings";
 
 interface Top3GamesProps {
   top3User: User | undefined;
@@ -127,8 +127,9 @@ const Top3Games = ({ top3User, gameArr }: Top3GamesProps) => {
               />
               <button
                 type={"button"}
+                disabled={!game1 || !game2 || !game3}
                 onClick={submitTop3}
-                className="my-0.5 inline-block rounded-lg bg-neon-blue-600 px-1.5 py-2 text-sm font-medium text-neon-blue-50 hover:bg-neon-blue-800"
+                className="my-0.5 inline-block rounded-lg bg-neon-blue-600 px-1.5 py-2 text-sm font-medium text-neon-blue-50 hover:bg-neon-blue-800 disabled:bg-gray-400"
               >
                 Set
               </button>

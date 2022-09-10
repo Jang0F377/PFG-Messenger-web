@@ -7,7 +7,7 @@ function Contact() {
         <div className=" lg:absolute lg:bottom-2/3 lg:right-0 lg:w-1/3">
           <img
             className="mx-auto w-[85vw] px-1.5 lg:absolute lg:w-full lg:rotate-90 lg:scale-150 2xl:rotate-45 2xl:scale-110  2xl:px-0"
-            src="/MicrosoftTeams-image-removebg-preview.png"
+            src="/public/MicrosoftTeams-image-removebg-preview.png"
             alt="ERR"
           />
         </div>
@@ -28,7 +28,7 @@ function Contact() {
               message using the form opposite, or email us.
             </p>
             <form
-              action="#"
+              action="src/components/Contact#"
               className="mt-9 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
             >
               <div>

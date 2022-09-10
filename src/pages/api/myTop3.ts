@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { sanityClient } from "../../sanity";
+import { sanityClient } from "../../../sanity";
 
 export default async function myTop3(
   req: NextApiRequest,

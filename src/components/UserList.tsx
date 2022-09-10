@@ -1,4 +1,4 @@
-import { User } from "../typings";
+import { User } from "../../typings";
 import CustomAvatar from "./CustomAvatar";
 import CustomDivider from "./CustomDivider";
 import { useState } from "react";

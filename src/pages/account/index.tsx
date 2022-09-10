@@ -5,8 +5,8 @@ import PageNotFound from "../../components/PageNotFound";
 import { useEffect, useState } from "react";
 
 import Top3Games from "../../components/Top3Games";
-import { sanityClient } from "../../sanity";
-import { User } from "../../typings";
+import { sanityClient } from "../../../sanity";
+import { User } from "../../../typings";
 
 function Account() {
   const [data, setData] = useState<User | undefined>();

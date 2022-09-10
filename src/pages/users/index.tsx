@@ -1,8 +1,8 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import DashboardHeader from "../../components/DashboardHeader";
 import { GetServerSideProps } from "next";
-import { sanityClient } from "../../sanity";
-import { User } from "../../typings";
+import { sanityClient } from "../../../sanity";
+import { User } from "../../../typings";
 import UserList from "../../components/UserList";
 import Container from "../../components/Container";
 import Loading from "../../components/Loading";

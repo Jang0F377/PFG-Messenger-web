@@ -7,7 +7,7 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
 import clsx from "clsx";
-import { sanityClient } from "../sanity";
+import { sanityClient } from "../../sanity";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useRouter } from "next/router";
 
@@ -95,10 +95,10 @@ export const SeshSendInviteModal = ({
       .catch((err) => console.warn(err));
   };
   const handleResetState = () => {
-    handleClose();
     setRecipientsIds(undefined);
     setRecipientsEmails(undefined);
     setRecipient(specificRecipient ? specificRecipient : "");
+    handleClose();
   };
   const handleSend = async () => {
     await fetch("/api/createSesh", {
@@ -113,7 +113,12 @@ export const SeshSendInviteModal = ({
     })
       .then((res) => {
         if (res.ok) {
-          router.replace("/dashboard");
+          router.replace({
+            pathname: "/dashboard",
+            query: {
+              sent: true,
+            },
+          });
         } else {
           alert("Unsuccessful please try again");
           router.replace("/dashboard");
@@ -130,11 +135,7 @@ export const SeshSendInviteModal = ({
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-30"
-        onClose={() => handleResetState()}
-      >
+      <Dialog as="div" className="relative z-30" onClose={() => {}}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -390,6 +391,7 @@ export const WelcomeModal = ({
   const [game1, setGame1] = useState("");
   const [game2, setGame2] = useState("");
   const [game3, setGame3] = useState("");
+  const [clickOut, setClickOut] = useState(false);
 
   const handleSubmit = async () => {
     await fetch("/api/myTop3", {
@@ -402,19 +404,38 @@ export const WelcomeModal = ({
       }),
     }).then((res) => {
       if (res.ok) {
+        setClickOut(false);
         handleClose();
       } else {
         alert(
           "Sorry, something went wrong. Please visit the Account page to input this "
         );
+        setClickOut(false);
         handleClose();
       }
     });
   };
 
+  const ClickOut = () => {
+    return (
+      <>
+        <p className="text-xs font-medium text-red-600">
+          Please fill in your Top 3!
+        </p>
+        <p className="text-[0.60rem] font-medium text-red-600">
+          you can change this later
+        </p>
+      </>
+    );
+  };
+
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-30" onClose={() => handleClose()}>
+      <Dialog
+        as="div"
+        className="relative z-30"
+        onClose={() => setClickOut(true)}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -444,6 +465,7 @@ export const WelcomeModal = ({
                     <label className="ml-1 block  font-medium text-neon-blue-900">
                       My Top 3 Games:
                     </label>
+                    {clickOut && <ClickOut />}
                     <div className="flex flex-col space-y-3 ">
                       <div className="flex flex-col items-center justify-evenly space-x-0 space-y-1 md:flex-row md:space-x-3 md:space-y-0">
                         <label className=" block  text-sm font-medium text-neon-blue-900">

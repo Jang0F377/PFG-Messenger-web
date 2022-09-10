@@ -8,12 +8,17 @@ export interface User {
   vip: boolean;
 }
 
-export interface SeshInvite {
-  recipients: Array<string>;
+export interface Sesh {
   game: string;
-  hour: number;
-  morningOrEvening: string;
-  time: string;
-  numberConfirmed?: number;
-  usersConfirmed?: Array<User>;
+  proposedDay: string;
+  proposedTime: string;
+  recipients: Array<User>;
+  sentFrom: {
+    _ref: string;
+  };
+  _createdAt: string;
+  _id: string;
+  _rev: string;
+  _type: string;
+  _updatedAt: string;
 }

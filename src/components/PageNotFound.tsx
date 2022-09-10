@@ -11,7 +11,7 @@ const PageNotFound = () => {
           <div>
             <img
               className="mx-auto flex h-[40vh] w-[50vw] px-1.5   2xl:px-0"
-              src="/MicrosoftTeams-image-removebg-preview.png"
+              src="/public/MicrosoftTeams-image-removebg-preview.png"
               alt="ERR"
             />
           </div>

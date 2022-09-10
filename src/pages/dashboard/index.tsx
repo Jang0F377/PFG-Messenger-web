@@ -7,10 +7,15 @@ import DashboardHeader from "../../components/DashboardHeader";
 import Friends from "../../components/Friends";
 import { GeneralNotification } from "../../components/Notifications";
 import { useEffect, useState } from "react";
-import { sanityClient } from "../../sanity";
+import { sanityClient } from "../../../sanity";
 import { WelcomeModal } from "../../components/Modals";
+import { useRouter } from "next/router";
+import IncomingSeshInviteItems from "../../components/IncomingSeshInviteItems";
+import { Sesh } from "../../../typings";
 
 function Dashboard() {
+  const router = useRouter();
+  const { sent } = router.query;
   const [name, setName] = useState<string | undefined>();
   const [passUserId, setPassUserId] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +23,7 @@ function Dashboard() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const [incomingSeshInvites, setIncomingSeshInvites] = useState<Array<Sesh>>();
   const loggedInUser = {
     email: user?.email,
     image: user?.picture,
@@ -35,26 +41,56 @@ function Dashboard() {
       .catch((err) => console.log(err));
   };
 
+  const fetchIncomingInvites = async () => {
+    await fetch("/api/getInvitedSeshes", {
+      method: "POST",
+      body: JSON.stringify({ _id: passUserId }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        if (res.status === 500) {
+          alert("STATUS CODE 500");
+        }
+      })
+      .then((data) => {
+        console.log(data.incomingInvites);
+        setIncomingSeshInvites(data.incomingInvites);
+      })
+      .catch((e) => console.log(e));
+  };
+
   useEffect(() => {
     setName(user?.email);
     if (name) {
       firstVisit(name)
         .then((res) => {
-          if (res) {
+          if (res === true) {
             setShowModal(true);
-            handleNewUser().then(async () => {
-              const params = { name: name };
-              const query = `*[_type == "user" && email == $name]{_id}`;
-              const usedId = await sanityClient.fetch(query, params);
-              if (usedId[0]?._id) {
-                setPassUserId(usedId[0]?._id);
-              }
-            });
+            handleNewUser().then();
+          } else if (typeof res === "string") {
+            setPassUserId(res);
           }
         })
         .catch((err) => console.log(err));
     }
   }, [name, user?.email]);
+  useEffect(() => {
+    if (passUserId) {
+      fetchIncomingInvites().catch((e) => console.log(e));
+    }
+  }, [passUserId]);
+
+  useEffect(() => {
+    if (sent === "true") {
+      showSuccessNotification();
+      setTimeout(() => resetNotificationState(), 3000);
+    } else if (sent === "false") {
+      showErrorNotification();
+      setTimeout(() => resetNotificationState(), 3000);
+    }
+  }, []);
 
   if (isLoading) {
     return <Loading />;
@@ -75,16 +111,11 @@ function Dashboard() {
     setShowNotification(true);
   };
 
-  const resetState = () => {
+  const resetNotificationState = () => {
     setSuccess(false);
     setShowNotification(false);
     setError(false);
   };
-
-  /*  const handleClick = () => {
-    // showSuccessNotification();
-    // setTimeout(() => resetState(), 2000);
-  };*/
 
   return (
     <>
@@ -122,7 +153,8 @@ function Dashboard() {
                   Pending Sesh invites
                 </h1>
                 <div className="flex h-96 items-center rounded-lg border-4 border border-neon-blue-800/50">
-                  <InviteEmptyState />
+                  <IncomingSeshInviteItems sesh={incomingSeshInvites?.[0]} />
+                  {/*<InviteEmptyState />*/}
                 </div>
               </div>
               {/* /End replace */}
@@ -167,6 +199,7 @@ export default Dashboard;
 async function firstVisit(name: string | undefined) {
   const params = { name: name };
   const query = `*[_type == "user" && email == $name]{
+  _id,
     firstTime
   }
   `;
@@ -175,7 +208,6 @@ async function firstVisit(name: string | undefined) {
     console.log("First Visit");
     return true;
   } else {
-    console.log("Welcome back");
-    return false;
+    return user[0]?._id;
   }
 }
