@@ -391,18 +391,21 @@ export const WelcomeModal = ({
   const [game1, setGame1] = useState("");
   const [game2, setGame2] = useState("");
   const [game3, setGame3] = useState("");
+  const [uid, setUid] = useState("");
   const [clickOut, setClickOut] = useState(false);
 
   const handleSubmit = async () => {
+    console.log(uid);
     await fetch("/api/myTop3", {
       method: "POST",
       body: JSON.stringify({
         game1: game1,
         game2: game2,
         game3: game3,
-        _id: specificRecipient,
+        _id: uid,
       }),
     }).then((res) => {
+      console.log(res);
       if (res.ok) {
         setClickOut(false);
         handleClose();
@@ -415,6 +418,11 @@ export const WelcomeModal = ({
       }
     });
   };
+  useEffect(() => {
+    if (specificRecipient) {
+      setUid(specificRecipient);
+    }
+  }, [specificRecipient]);
 
   const ClickOut = () => {
     return (

@@ -183,11 +183,11 @@ function Dashboard() {
             )}
           </div>
           {/*MODAL*/}
-          <WelcomeModal
+          {/*          <WelcomeModal
             handleClose={handleCloseModal}
             open={showModal}
             specificRecipient={passUserId}
-          />
+          />*/}
         </div>
       )}
     </>
@@ -200,14 +200,13 @@ async function firstVisit(name: string | undefined) {
   const params = { name: name };
   const query = `*[_type == "user" && email == $name]{
   _id,
-    firstTime
   }
   `;
   const user = await sanityClient.fetch(query, params);
-  if (user[0]?.firstTime !== false) {
+  if (!user[0]?._id) {
     console.log("First Visit");
     return true;
-  } else {
+  } else if (user[0]?._id) {
     return user[0]?._id;
   }
 }
