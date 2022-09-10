@@ -35,8 +35,8 @@ const UserList = ({ user }: UserListProps) => {
         </label>
         {gamesPlayed?.length ? (
           <ul className="text-center">
-            {gamesPlayed.map((game) => (
-              <li key={game} className="text-sm text-neon-blue-900">
+            {gamesPlayed.map((game, idx) => (
+              <li key={`${game}-${idx}`} className="text-sm text-neon-blue-900">
                 {game}
               </li>
             ))}

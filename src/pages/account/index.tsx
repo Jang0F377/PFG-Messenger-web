@@ -34,17 +34,15 @@ function Account() {
 
   useEffect(() => {
     setMyLoading(true);
-    if (user?.email) {
-      getUser(user?.email).then((res) => {
-        if (res) {
-          setData(res);
-          setMyLoading(false);
-        } else {
-          console.log(res);
-          setMyLoading(false);
-        }
-      });
-    }
+    getUser(user?.email).then((res) => {
+      if (res) {
+        setData(res);
+        setMyLoading(false);
+      } else {
+        console.log(res);
+        setMyLoading(false);
+      }
+    });
   }, [user?.email]);
   useEffect(() => {
     return () => clearState();

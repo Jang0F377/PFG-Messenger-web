@@ -23,8 +23,6 @@ Q
 !src/pages/api/getInvitedSeshes.ts,1/c/1cfa1228ad44b69d4d1047dc371b5c8921904c84
 S
 #src/components/InviteReceivedEx.tsx,d/d/ddc917ee110df29b85ac640f083e7fd13184ef80
-T
-$src/components/DashboardNavLinks.jsx,d/a/da3fae521803d291e29524b853df9269faa301c4
 I
 src/components/Modals.tsx,9/f/9fed97ab2ecac11c306e42502ee801f7fa2cb62c
 I
@@ -37,5 +35,3 @@ J
 src/components/Loading.tsx,e/f/efef1639e135d4d55c112e96b2d63bf89b37e1c3
 M
 src/pages/dashboard/index.tsx,c/2/c283385df7191ee3c90852daecbb10d7e9d614a3
-B
-src/pages/_app.tsx,2/e/2eefa41a18ed6ea3f58b3748f9e5559a28e77646
