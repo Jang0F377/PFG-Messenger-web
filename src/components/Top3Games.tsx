@@ -28,7 +28,7 @@ const Top3Games = ({ top3User, gameArr }: Top3GamesProps) => {
       .then((res) => {
         setEditing(false);
         if (res.ok) {
-          router.reload();
+          router.replace("/dashboard");
         } else {
           alert("Unsuccessful please try again");
           router.replace("/dashboard");

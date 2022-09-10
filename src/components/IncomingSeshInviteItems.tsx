@@ -8,7 +8,7 @@ interface IncomingSeshInviteItemsProps {
 const IncomingSeshInviteItems = ({ sesh }: IncomingSeshInviteItemsProps) => {
   return (
     <>
-      <div className="mx-1 flex   flex-col  rounded-lg ">
+      <div className="relative mx-1 flex   flex-col  rounded-lg ">
         <header className="py-1">
           <p className="absolute top-2 right-2 text-xs">
             Received {new Date().toLocaleDateString()}
