@@ -8,7 +8,6 @@ import Friends from "../../components/Friends";
 import { GeneralNotification } from "../../components/Notifications";
 import { useEffect, useState } from "react";
 import { sanityClient } from "../../../sanity";
-import { WelcomeModal } from "../../components/Modals";
 import { useRouter } from "next/router";
 import IncomingSeshInviteItems from "../../components/IncomingSeshInviteItems";
 import { Sesh } from "../../../typings";
@@ -18,7 +17,6 @@ function Dashboard() {
   const { sent } = router.query;
   const [name, setName] = useState<string | undefined>();
   const [passUserId, setPassUserId] = useState("");
-  const [showModal, setShowModal] = useState(false);
   const { user, isLoading, isAuthenticated } = useAuth0();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -28,8 +26,22 @@ function Dashboard() {
     email: user?.email,
     image: user?.picture,
   };
-  const handleCloseModal = () => {
-    setShowModal(false);
+
+  const showSuccessNotification = () => {
+    setError(false);
+    setSuccess(true);
+    setShowNotification(true);
+  };
+  const showErrorNotification = () => {
+    setSuccess(false);
+    setError(true);
+    setShowNotification(true);
+  };
+
+  const resetNotificationState = () => {
+    setSuccess(false);
+    setShowNotification(false);
+    setError(false);
   };
 
   const handleNewUser = async () => {
@@ -55,7 +67,6 @@ function Dashboard() {
         }
       })
       .then((data) => {
-        console.log(data.incomingInvites);
         setIncomingSeshInvites(data.incomingInvites);
       })
       .catch((e) => console.log(e));
@@ -67,8 +78,7 @@ function Dashboard() {
       firstVisit(name)
         .then((res) => {
           if (res === true) {
-            setShowModal(true);
-            handleNewUser().then();
+            handleNewUser().catch((e) => console.warn(e));
           } else if (typeof res === "string") {
             setPassUserId(res);
           }
@@ -100,23 +110,6 @@ function Dashboard() {
     return <PageNotFound />;
   }
 
-  const showSuccessNotification = () => {
-    setError(false);
-    setSuccess(true);
-    setShowNotification(true);
-  };
-  const showErrorNotification = () => {
-    setSuccess(false);
-    setError(true);
-    setShowNotification(true);
-  };
-
-  const resetNotificationState = () => {
-    setSuccess(false);
-    setShowNotification(false);
-    setError(false);
-  };
-
   return (
     <>
       {isAuthenticated && (
@@ -146,15 +139,21 @@ function Dashboard() {
               {/* /End replace */}
             </section>
 
-            <section className="mx-1.5 rounded-lg bg-neon-blue-50 px-2 pb-6 sm:px-3 md:mx-auto md:max-w-2xl lg:max-w-4xl lg:px-4  xl:max-w-7xl">
+            <section className="mx-1.5 items-center justify-center rounded-lg bg-neon-blue-200 px-2 pb-6 sm:px-3 md:mx-auto md:max-w-2xl lg:max-w-4xl lg:px-4  xl:max-w-7xl">
               {/* Replace with your content */}
-              <div className="mx-auto  items-center justify-center rounded-lg bg-neon-blue-200 px-5 py-3 text-center  sm:px-6">
+              <div className="mx-auto  items-center justify-center rounded-lg  px-5 py-3 text-center  sm:px-6">
                 <h1 className="-mt-2  text-left text-xl font-medium">
                   Pending Sesh invites
                 </h1>
-                <div className="flex h-96 items-center rounded-lg border-4 border border-neon-blue-800/50">
-                  <IncomingSeshInviteItems sesh={incomingSeshInvites?.[0]} />
-                  {/*<InviteEmptyState />*/}
+                <div className="flex h-fit flex-row flex-nowrap items-center justify-center overflow-x-auto rounded-lg border-4 border border-neon-blue-800/50 py-2">
+                  {incomingSeshInvites?.length ? (
+                    <IncomingSeshInviteItems
+                      sesh={incomingSeshInvites?.[0]}
+                      myId={passUserId}
+                    />
+                  ) : (
+                    <InviteEmptyState />
+                  )}
                 </div>
               </div>
               {/* /End replace */}
@@ -183,11 +182,6 @@ function Dashboard() {
             )}
           </div>
           {/*MODAL*/}
-          {/*          <WelcomeModal
-            handleClose={handleCloseModal}
-            open={showModal}
-            specificRecipient={passUserId}
-          />*/}
         </div>
       )}
     </>

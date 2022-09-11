@@ -383,7 +383,7 @@ export const SeshSendInviteModal = ({
 
 export const SeshReceiveInviteModal = ({ open }: ModalProps) => {};
 
-export const WelcomeModal = ({
+/*export const WelcomeModal = ({
   open,
   handleClose,
   specificRecipient,
@@ -531,4 +531,4 @@ export const WelcomeModal = ({
       </Dialog>
     </Transition.Root>
   );
-};
+};*/

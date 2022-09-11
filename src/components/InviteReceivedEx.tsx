@@ -5,7 +5,7 @@ import { AtSymbolIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import clsx from "clsx";
 
-const ConfirmOrDeclineButtons = () => {
+export const ConfirmOrDeclineButtons = () => {
   const confirm = "Confirm";
   const decline = "Decline";
   const [selected, setSelected] = useState(confirm);

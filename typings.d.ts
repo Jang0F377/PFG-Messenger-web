@@ -12,7 +12,13 @@ export interface Sesh {
   game: string;
   proposedDay: string;
   proposedTime: string;
-  recipients: Array<User>;
+  recipients: [
+    {
+      _ref: string;
+      _key: string;
+      _type: string;
+    }
+  ];
   sentFrom: {
     _ref: string;
   };
