@@ -48,7 +48,7 @@ export function EmptyState() {
 
 export function InviteEmptyState() {
   return (
-    <div className=" mx-auto max-w-[16rem] rounded-xl border border-neon-blue-800/70 bg-neon-blue-50 p-3 transition duration-200 ease-in-out hover:translate-y-1 hover:scale-105 lg:hover:scale-110 ">
+    <div className=" mx-auto my-auto  max-w-[16rem]  rounded-xl border border-neon-blue-800/70 bg-neon-blue-50 p-3 transition duration-200 ease-in-out hover:translate-y-1 hover:scale-105 lg:hover:scale-110 ">
       <EnvelopeOpenIcon className="mx-auto h-14 w-14 text-neon-blue-700" />
       <h3 className="mt-2 text-sm font-medium text-neon-blue-800">
         No invites

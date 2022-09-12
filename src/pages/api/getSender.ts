@@ -2,17 +2,18 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { sanityClient } from "../../../sanity";
 
-export default async function getInvitedSeshes(
+export default async function getSender(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { _id } = JSON.parse(req.body);
-  const query = `*[_type == "user" && _id == "${_id}"]{
-  seshInvites
-}`;
+  const { ref } = JSON.parse(req.body);
+  let query = `*[_type == "user" && _id == $id]{
+        email,
+        image
+    }`;
   try {
-    const incomingInvites = await sanityClient.fetch(query, { id: _id });
-    res.status(200).send({ incomingInvites });
+    const senderInfo = await sanityClient.fetch(query, { id: ref });
+    res.status(200).send({ senderInfo });
   } catch (e) {
     res.status(500).send({ error: "failed to fetch data" + e });
   }

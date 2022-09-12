@@ -26,11 +26,23 @@ export default async function createSesh(
     });
     await recipients.forEach((id: string) => {
       sanityClient
+        .patch(id)
+        .setIfMissing({ seshInvites: [] })
+        .append("seshInvites", [{ _type: "reference", _ref: givenId }])
+        .commit({ autoGenerateArrayKeys: true });
+    });
+    await recipients.forEach((id: string) => {
+      sanityClient
         .patch(givenId)
         .setIfMissing({ recipients: [] })
         .append("recipients", [{ _type: "reference", _ref: id }])
         .commit({ autoGenerateArrayKeys: true });
     });
+    await sanityClient
+      .patch(sentFrom)
+      .setIfMissing({ upcomingSeshes: [] })
+      .append("upcomingSeshes", [{ _type: "reference", _ref: givenId }])
+      .commit({ autoGenerateArrayKeys: true });
   } catch (e) {
     console.warn(e);
     return res.status(500).json({ message: `Couldn't submit sesh`, e });

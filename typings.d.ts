@@ -8,6 +8,12 @@ export interface User {
   vip: boolean;
 }
 
+export interface SeshReference {
+  _key: string;
+  _ref: string;
+  _type: string;
+}
+
 export interface Sesh {
   game: string;
   proposedDay: string;

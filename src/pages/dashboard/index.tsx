@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { sanityClient } from "../../../sanity";
 import { useRouter } from "next/router";
 import IncomingSeshInviteItems from "../../components/IncomingSeshInviteItems";
-import { Sesh } from "../../../typings";
+import { SeshReference } from "../../../typings";
 
 function Dashboard() {
   const router = useRouter();
@@ -21,7 +21,8 @@ function Dashboard() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
-  const [incomingSeshInvites, setIncomingSeshInvites] = useState<Array<Sesh>>();
+  const [incomingSeshInvites, setIncomingSeshInvites] =
+    useState<Array<SeshReference>>();
   const loggedInUser = {
     email: user?.email,
     image: user?.picture,
@@ -67,7 +68,7 @@ function Dashboard() {
         }
       })
       .then((data) => {
-        setIncomingSeshInvites(data.incomingInvites);
+        setIncomingSeshInvites(data.incomingInvites[0].seshInvites);
       })
       .catch((e) => console.log(e));
   };
@@ -125,7 +126,7 @@ function Dashboard() {
             </header>
           </div>
 
-          <main className="-mt-32 bg-neon-blue-50 pt-3  ">
+          <main className="-mt-32 space-y-3 bg-neon-blue-50 pt-3 ">
             <section className="mx-1.5 px-4 pb-3 sm:px-6 md:mx-auto  md:max-w-2xl md:pb-6 lg:max-w-4xl lg:px-4 lg:px-8 xl:max-w-7xl xl:pb-8">
               {/* Replace with your content */}
               <div className="mx-auto  items-center justify-center rounded-lg bg-neon-blue-200 px-5 py-6 text-center  sm:px-6">
@@ -145,12 +146,15 @@ function Dashboard() {
                 <h1 className="-mt-2  text-left text-xl font-medium">
                   Pending Sesh invites
                 </h1>
-                <div className="flex max-h-fit min-h-[20rem] flex-row flex-nowrap items-center justify-center overflow-x-auto rounded-lg border-4 border border-neon-blue-800/50 py-2">
+                <div className="flex max-h-fit min-h-[20rem] flex-row flex-nowrap overflow-x-auto rounded-lg border-4 border border-neon-blue-800/50 py-2 md:justify-center">
                   {incomingSeshInvites?.length ? (
-                    <IncomingSeshInviteItems
-                      sesh={incomingSeshInvites?.[0]}
-                      myId={passUserId}
-                    />
+                    incomingSeshInvites.map((sesh) => (
+                      <IncomingSeshInviteItems
+                        key={sesh?._key}
+                        sesh={sesh}
+                        myId={passUserId}
+                      />
+                    ))
                   ) : (
                     <InviteEmptyState />
                   )}
