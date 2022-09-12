@@ -145,7 +145,7 @@ function Dashboard() {
                 <h1 className="-mt-2  text-left text-xl font-medium">
                   Pending Sesh invites
                 </h1>
-                <div className="flex h-fit flex-row flex-nowrap items-center justify-center overflow-x-auto rounded-lg border-4 border border-neon-blue-800/50 py-2">
+                <div className="flex max-h-fit min-h-[20rem] flex-row flex-nowrap items-center justify-center overflow-x-auto rounded-lg border-4 border border-neon-blue-800/50 py-2">
                   {incomingSeshInvites?.length ? (
                     <IncomingSeshInviteItems
                       sesh={incomingSeshInvites?.[0]}

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import CustomAvatar from "./CustomAvatar";
 import { AtSymbolIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
+import { useRouter } from "next/router";
 
 interface IncomingSeshInviteItemsProps {
   sesh: Sesh | undefined;
@@ -15,6 +16,7 @@ const IncomingSeshInviteItems = ({
   sesh,
   myId,
 }: IncomingSeshInviteItemsProps) => {
+  const router = useRouter();
   const [sendersDetails, setSendersDetails] = useState({
     email: "",
     image: "",
@@ -47,7 +49,7 @@ const IncomingSeshInviteItems = ({
     })
       .then((res) => {
         if (res.ok) {
-          console.log(res);
+          router.reload();
         }
       })
       .catch((e) => console.log(e));
@@ -73,10 +75,10 @@ const IncomingSeshInviteItems = ({
   return (
     <>
       {sesh && (
-        <div className="mx-2.5 flex h-[90%]  w-[45%] flex-col rounded-lg   bg-neon-blue-50  p-2 ">
+        <div className="mx-2.5 flex h-[90%]  flex-col rounded-lg bg-neon-blue-50   p-2  md:w-[30%] ">
           <header className="py-1">
-            <p className="top-2 right-2 text-right text-xs">
-              Received {new Date().toLocaleDateString()}
+            <p className="top-2 right-2 text-right text-xs ">
+              {new Date().toLocaleDateString()}
             </p>
             <h1 className="text-center text-3xl font-medium text-neon-blue-900">
               Sesh Invite
