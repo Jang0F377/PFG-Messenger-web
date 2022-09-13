@@ -10,7 +10,8 @@ import { useEffect, useState } from "react";
 import { sanityClient } from "../../../sanity";
 import { useRouter } from "next/router";
 import IncomingSeshInviteItems from "../../components/IncomingSeshInviteItems";
-import { SeshReference } from "../../../typings";
+import { GeneralReference } from "../../../typings";
+import UpcomingSeshItems from "../../components/UpcomingSeshItems";
 
 function Dashboard() {
   const router = useRouter();
@@ -22,12 +23,13 @@ function Dashboard() {
   const [error, setError] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [incomingSeshInvites, setIncomingSeshInvites] =
-    useState<Array<SeshReference>>();
+    useState<Array<GeneralReference>>();
+  const [upcomingSeshes, setUpcomingSeshes] =
+    useState<Array<GeneralReference>>();
   const loggedInUser = {
     email: user?.email,
     image: user?.picture,
   };
-
   const showSuccessNotification = () => {
     setError(false);
     setSuccess(true);
@@ -38,7 +40,6 @@ function Dashboard() {
     setError(true);
     setShowNotification(true);
   };
-
   const resetNotificationState = () => {
     setSuccess(false);
     setShowNotification(false);
@@ -69,6 +70,7 @@ function Dashboard() {
       })
       .then((data) => {
         setIncomingSeshInvites(data.incomingInvites[0].seshInvites);
+        setUpcomingSeshes(data.incomingInvites[0].upcomingSeshes);
       })
       .catch((e) => console.log(e));
   };
@@ -133,8 +135,18 @@ function Dashboard() {
                 <h1 className="-mt-5  text-left text-xl font-medium">
                   Upcoming Seshes
                 </h1>
-                <div className="flex h-96 items-center rounded-lg border-4 border border-neon-blue-800/50">
-                  <EmptyState />
+                <div className="flex max-h-fit min-h-[24rem] flex-row flex-nowrap overflow-x-auto rounded-lg border-4 border border-neon-blue-800/50 py-2 md:justify-center">
+                  {upcomingSeshes?.length ? (
+                    upcomingSeshes.map((sesh) => (
+                      <UpcomingSeshItems
+                        key={sesh?._key}
+                        sesh={sesh}
+                        myId={passUserId}
+                      />
+                    ))
+                  ) : (
+                    <EmptyState />
+                  )}
                 </div>
               </div>
               {/* /End replace */}
@@ -146,11 +158,11 @@ function Dashboard() {
                 <h1 className="-mt-2  text-left text-xl font-medium">
                   Pending Sesh invites
                 </h1>
-                <div className="flex max-h-fit min-h-[20rem] flex-row flex-nowrap overflow-x-auto rounded-lg border-4 border border-neon-blue-800/50 py-2 md:justify-center">
+                <div className="flex max-h-fit min-h-[24rem] flex-row flex-nowrap overflow-x-auto rounded-lg border-4 border border-neon-blue-800/50 py-2 md:justify-center">
                   {incomingSeshInvites?.length ? (
-                    incomingSeshInvites.map((sesh) => (
+                    incomingSeshInvites.map((sesh, idx) => (
                       <IncomingSeshInviteItems
-                        key={sesh?._key}
+                        key={idx}
                         sesh={sesh}
                         myId={passUserId}
                       />

@@ -8,7 +8,7 @@ export interface User {
   vip: boolean;
 }
 
-export interface SeshReference {
+export interface GeneralReference {
   _key: string;
   _ref: string;
   _type: string;
@@ -33,4 +33,6 @@ export interface Sesh {
   _rev: string;
   _type: string;
   _updatedAt: string;
+  usersConfirmed: Array<GeneralReference>;
+  usersDeclined: Array<GeneralReference>;
 }

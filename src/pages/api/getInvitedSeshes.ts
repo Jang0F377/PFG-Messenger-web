@@ -8,6 +8,7 @@ export default async function getInvitedSeshes(
 ) {
   const { _id } = JSON.parse(req.body);
   const query = `*[_type == "user" && _id == "${_id}"]{
+  upcomingSeshes,
   seshInvites
 }`;
   try {

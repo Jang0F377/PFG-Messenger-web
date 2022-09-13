@@ -7,16 +7,21 @@ export default async function postDecision(
   res: NextApiResponse
 ) {
   const { decision, _id, seshId } = JSON.parse(req.body);
-  const userToRemove = [`recipients[_ref=="${_id}"]`];
+  const seshToRemove = [`seshInvites[_ref=="${seshId}"]`];
 
   if (decision === "Confirm") {
     try {
       await sanityClient
         .patch(seshId)
-        .unset(userToRemove)
         .setIfMissing({ usersConfirmed: [] })
         .append("usersConfirmed", [{ _type: "reference", _ref: _id }])
         .commit({ autoGenerateArrayKeys: true });
+      await sanityClient
+        .patch(_id)
+        .setIfMissing({ upcomingSeshes: [] })
+        .append("upcomingSeshes", [{ _type: "reference", _ref: seshId }])
+        .unset(seshToRemove)
+        .commit();
     } catch (e) {
       return res.status(500).json({ message: `Couldn't submit decision`, e });
     }
@@ -25,10 +30,10 @@ export default async function postDecision(
     try {
       await sanityClient
         .patch(seshId)
-        .unset(userToRemove)
         .setIfMissing({ usersDeclined: [] })
         .append("usersDeclined", [{ _type: "reference", _ref: _id }])
         .commit({ autoGenerateArrayKeys: true });
+      await sanityClient.patch(_id).unset(seshToRemove).commit();
     } catch (e) {
       return res.status(500).json({ message: `Couldn't submit decision`, e });
     }

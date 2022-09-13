@@ -1,23 +1,21 @@
 import { Sesh, GeneralReference } from "../../typings";
 import MyDivider from "./CustomDivider";
-import { sanityClient } from "../../sanity";
-import { useEffect, useState } from "react";
 import CustomAvatar from "./CustomAvatar";
 import { AtSymbolIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
-import { useRouter } from "next/router";
-import Loading from "./Loading";
+import { useEffect, useState } from "react";
+import {
+  HandThumbDownIcon,
+  HandThumbUpIcon,
+} from "@heroicons/react/24/outline";
+import { green } from "@sanity/color";
 
-interface IncomingSeshInviteItemsProps {
+interface UpcomingSeshItemsProps {
   sesh: GeneralReference | undefined;
   myId: string;
 }
 
-const IncomingSeshInviteItems = ({
-  sesh,
-  myId,
-}: IncomingSeshInviteItemsProps) => {
-  const router = useRouter();
+const UpcomingSeshItems = ({ sesh, myId }: UpcomingSeshItemsProps) => {
   const [loading, setLoading] = useState(false);
   const [sendersDetails, setSendersDetails] = useState({
     email: "",
@@ -25,39 +23,7 @@ const IncomingSeshInviteItems = ({
   });
   const [fullSeshDeets, setFullSeshDeets] = useState<Sesh>();
   const [senderReference, setSenderReference] = useState<string>("");
-  const confirm = "Confirm";
-  const decline = "Decline";
-  const [selected, setSelected] = useState("");
-  const handleConfirmClick = () => {
-    if (selected !== confirm) {
-      setSelected(confirm);
-    } else {
-      return;
-    }
-  };
-  const handleDeclineClick = () => {
-    if (selected !== decline) {
-      setSelected(decline);
-    } else {
-      return;
-    }
-  };
-  const handleSubmitDecision = async () => {
-    await fetch("/api/postDecision", {
-      method: "POST",
-      body: JSON.stringify({
-        decision: selected,
-        seshId: sesh?._ref,
-        _id: myId,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          router.reload();
-        }
-      })
-      .catch((e) => console.log(e));
-  };
+
   const fetchSeshInfo = async () => {
     await fetch("/api/getSeshInfo", {
       method: "POST",
@@ -114,14 +80,10 @@ const IncomingSeshInviteItems = ({
     }
   }, [sesh, senderReference]);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <>
       {sesh && (
-        <div className="mx-2.5 flex h-[90%]  flex-col rounded-lg bg-neon-blue-50   p-2  md:w-[35%] ">
+        <div className="mx-2.5 my-auto flex h-[90%]  flex-col rounded-lg bg-neon-blue-50   p-2  md:w-[35%] ">
           <header className="py-1">
             <p className="top-2 right-2 text-right text-xs ">
               {fullSeshDeets?._createdAt?.split("T")[0]}
@@ -141,7 +103,7 @@ const IncomingSeshInviteItems = ({
           </div>
           <div className="my-1 ">
             <h3 className="text-center text-xs  text-neon-blue-900 md:text-sm ">
-              Lets play some:
+              We&apos;re playing some:
             </h3>
             <h2 className="text-center text-sm font-medium text-neon-blue-900 md:text-base">
               {fullSeshDeets?.game}
@@ -149,12 +111,6 @@ const IncomingSeshInviteItems = ({
             <MyDivider text={"When"} />
           </div>
           <div className="z-20 mx-auto flex flex-col text-center">
-            <p className="text-base font-medium text-neon-blue-900">
-              {sendersDetails.email
-                ? sendersDetails.email.split("@")[0]
-                : "Loading"}
-            </p>
-            <p className="text-sm text-neon-blue-900">proposes</p>
             <div className="mx-auto flex flex-col items-center justify-center space-y-2 space-x-0 md:flex-row md:space-y-0 md:space-x-3">
               <h1 className="flex text-lg  font-medium text-neon-blue-900">
                 {fullSeshDeets?.proposedDay}
@@ -164,43 +120,31 @@ const IncomingSeshInviteItems = ({
                 {fullSeshDeets?.proposedTime}
               </h2>
             </div>
-            <div className="flex flex-col">
-              <span className="mx-auto my-2 mb-4 flex rounded-md shadow-sm">
-                <button
-                  onClick={handleConfirmClick}
-                  id={confirm}
-                  className={clsx(
-                    "relative inline-flex items-center rounded-l-md   px-4 py-2 text-sm font-medium ",
-                    selected === confirm
-                      ? "border border-white bg-green-700 text-green-50 "
-                      : "border border-gray-300 bg-white text-green-700 hover:border-green-50 hover:bg-green-700 hover:text-green-50 hover:ring-1 hover:ring-green-500"
-                  )}
-                >
-                  {confirm}
-                </button>
-                <button
-                  onClick={handleDeclineClick}
-                  id={decline}
-                  className={clsx(
-                    "relative inline-flex items-center rounded-r-md   px-4 py-2 text-sm font-medium",
-                    selected === decline
-                      ? "border border-white bg-red-700 text-red-50 "
-                      : "border border-gray-300 bg-white text-red-700 hover:border-red-50 hover:bg-red-700 hover:text-red-50  hover:ring-1 hover:ring-red-500"
-                  )}
-                >
-                  {decline}
-                </button>
-              </span>
-            </div>
-            {selected === confirm || selected === decline ? (
-              <button
-                disabled={selected !== confirm && selected !== decline}
-                onClick={handleSubmitDecision}
-                className="my-0.5 inline-block rounded-lg bg-neon-blue-600 px-1.5 py-2 text-sm font-medium text-neon-blue-50 hover:bg-neon-blue-800 disabled:bg-gray-400"
-              >
-                Make Decision
-              </button>
-            ) : null}
+          </div>
+          <div className="my-0.5">
+            <MyDivider text={"Confirmed"} />
+          </div>
+          <div className="mx-auto my-1 flex w-full flex-row justify-evenly ">
+            {fullSeshDeets?.usersConfirmed?.length
+              ? fullSeshDeets?.usersConfirmed.map((_x, idx) => (
+                  <div key={idx} className="flex flex-row space-x-2">
+                    <p className="font-medium text-neon-blue-900">
+                      {fullSeshDeets?.usersConfirmed?.length}
+                    </p>
+                    <HandThumbUpIcon className="h-6 w-6 fill-green-500 text-green-800" />
+                  </div>
+                ))
+              : null}
+            {fullSeshDeets?.usersDeclined?.length
+              ? fullSeshDeets?.usersDeclined.map((_x, idx) => (
+                  <div key={idx} className="flex flex-row space-x-2">
+                    <p className="font-medium text-neon-blue-900">
+                      {fullSeshDeets?.usersConfirmed?.length}
+                    </p>
+                    <HandThumbDownIcon className="h-6 w-6 fill-red-500 text-red-800" />
+                  </div>
+                ))
+              : null}
           </div>
         </div>
       )}
@@ -208,4 +152,4 @@ const IncomingSeshInviteItems = ({
   );
 };
 
-export default IncomingSeshInviteItems;
+export default UpcomingSeshItems;
