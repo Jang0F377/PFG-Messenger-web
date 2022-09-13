@@ -83,7 +83,7 @@ const UpcomingSeshItems = ({ sesh, myId }: UpcomingSeshItemsProps) => {
   return (
     <>
       {sesh && (
-        <div className="mx-2.5 my-auto flex h-[90%]  flex-col rounded-lg bg-neon-blue-50   p-2  md:w-[35%] ">
+        <div className="mx-auto my-auto flex h-[90%] flex-col rounded-lg bg-neon-blue-50 py-1 px-4 md:w-[30%] md:px-2  ">
           <header className="py-1">
             <p className="top-2 right-2 text-right text-xs ">
               {fullSeshDeets?._createdAt?.split("T")[0]}

@@ -135,7 +135,7 @@ function Dashboard() {
                 <h1 className="-mt-5  text-left text-xl font-medium">
                   Upcoming Seshes
                 </h1>
-                <div className="flex max-h-fit min-h-[24rem] flex-row flex-nowrap overflow-x-auto rounded-lg border-4 border border-neon-blue-800/50 py-2 md:justify-center">
+                <div className=" flex max-h-fit min-h-[24rem] flex-row overflow-x-auto rounded-lg border-4 border border-neon-blue-800/50 py-2 md:justify-center">
                   {upcomingSeshes?.length ? (
                     upcomingSeshes.map((sesh) => (
                       <UpcomingSeshItems

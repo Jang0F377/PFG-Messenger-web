@@ -21,7 +21,7 @@ export default async function postDecision(
         .setIfMissing({ upcomingSeshes: [] })
         .append("upcomingSeshes", [{ _type: "reference", _ref: seshId }])
         .unset(seshToRemove)
-        .commit();
+        .commit({ autoGenerateArrayKeys: true });
     } catch (e) {
       return res.status(500).json({ message: `Couldn't submit decision`, e });
     }
